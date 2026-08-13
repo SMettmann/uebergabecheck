@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ÜbergabeCheck – Wohnungsübergabe</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#17181b}
+  .app{max-width:1050px;margin:auto;padding:28px 18px 60px}
+  header{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
+  .brand{font-size:22px;font-weight:800;letter-spacing:-.5px}
+  .brand span{font-weight:500;color:#777}
+  .badge{font-size:13px;background:#fff;border:1px solid #ddd;padding:8px 12px;border-radius:999px;color:#666}
+  .hero{background:#111;color:#fff;border-radius:24px;padding:34px;margin-bottom:22px}
+  .hero h1{font-size:34px;line-height:1.05;margin:0 0 10px;letter-spacing:-1px}
+  .hero p{margin:0;color:#c7c7c7;max-width:680px;line-height:1.6}
+  .progress{display:flex;gap:6px;margin-top:24px}
+  .dot{height:5px;flex:1;background:#3b3b3b;border-radius:5px}
+  .dot.active{background:#fff}
+  .card{background:#fff;border:1px solid #e2e3e6;border-radius:20px;padding:24px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,.035)}
+  h2{font-size:22px;margin:0 0 6px}
+  .sub{color:#70727a;font-size:14px;margin-bottom:20px}
+  label{display:block;font-size:13px;font-weight:700;margin:16px 0 7px}
+  input,textarea,select{width:100%;padding:13px 14px;border:1px solid #d8d9dd;border-radius:12px;font:inherit;background:#fff}
+  textarea{min-height:90px;resize:vertical}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .room-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .room{border:1px solid #ddd;border-radius:15px;padding:16px;cursor:pointer;background:#fff}
+  .room.selected{border:2px solid #111;padding:15px}
+  .room strong{display:block;margin-bottom:5px}
+  .room small{color:#777}
+  .choice-row{display:flex;gap:10px;flex-wrap:wrap}
+  .choice{border:1px solid #ddd;border-radius:12px;padding:11px 14px;cursor:pointer;background:#fff}
+  .choice.active{background:#111;color:#fff;border-color:#111}
+  .actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}
+  button{border:0;border-radius:12px;padding:13px 18px;font-weight:750;cursor:pointer;font:inherit}
+  .primary{background:#111;color:#fff}
+  .secondary{background:#ececef;color:#222}
+  .danger{background:#fff0f0;color:#a11}
+  .hidden{display:none}
+  .photo-box{border:1px dashed #c8c9ce;border-radius:15px;padding:22px;text-align:center;color:#777}
+  .photo-preview{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .photo-preview img{width:110px;height:85px;object-fit:cover;border-radius:10px;border:1px solid #ddd}
+  .summary-row{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:12px 0;gap:20px}
+  .summary-row:last-child{border-bottom:0}
+  .notice{background:#f0f1f3;padding:13px 15px;border-radius:12px;color:#555;font-size:14px;line-height:1.5}
+  @media(max-width:700px){
+    .grid,.room-grid{grid-template-columns:1fr}
+    .hero h1{font-size:28px}
+    .app{padding:18px 12px 40px}
+    .card{padding:18px}
+  }
+  @media print{
+    body{background:#fff}
+    header,.hero,.actions,.no-print{display:none!important}
+    .app{max-width:none;padding:0}
+    .card{box-shadow:none;border:0;padding:0;margin:0 0 20px}
+  }
+
+  .protocol{background:#fff;color:#17181b}
+  .protocol-cover{padding:28px 8px 34px;border-bottom:2px solid #111;margin-bottom:22px}
+  .protocol-kicker{font-size:11px;font-weight:800;letter-spacing:2px;color:#777;margin-bottom:10px}
+  .protocol h1{font-size:34px;letter-spacing:-1px;margin:0 0 8px}
+  .protocol-address{font-size:18px;color:#555;margin-bottom:25px}
+  .protocol-meta{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .protocol-meta div,.overview-grid div{background:#f5f5f6;border-radius:12px;padding:13px}
+  .protocol-meta span,.overview-grid span,.protocol-row span{display:block;font-size:11px;color:#777;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+  .protocol-section{margin:22px 0;padding:18px 0;border-bottom:1px solid #e5e5e7}
+  .section-title{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:800;margin-bottom:14px}
+  .overview-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  .protocol-row{display:flex;justify-content:space-between;gap:20px;padding:12px 0;border-bottom:1px solid #eee}
+  .protocol-row:last-child{border-bottom:0}
+  .protocol-detail{background:#f7f7f8;border-radius:12px;padding:13px;line-height:1.55}
+  .protocol-detail strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#777;margin-bottom:6px}
+  .state-pill{font-size:11px;padding:6px 9px;border-radius:999px;font-weight:800;background:#eee}
+  .state-pill.ok{background:#e9f5ec}
+  .state-pill.wear{background:#fff4d9}
+  .state-pill.damage{background:#ffe9e9}
+  .muted{color:#777;font-size:13px}
+  .photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
+  .protocol-photo{width:100%;height:180px;object-fit:cover;border-radius:10px;border:1px solid #ddd}
+  .signature-section{padding-top:10px}
+  .signature-grid{display:grid;grid-template-columns:1fr 1fr;gap:45px;margin-top:35px}
+  .signature-line{height:70px;border-bottom:1px solid #777;margin-bottom:8px}
+  .signature-grid span{display:block;color:#777;font-size:12px;margin-top:3px}
+  .protocol-footer{font-size:11px;color:#888;text-align:center;padding-top:12px}
+  @media(max-width:700px){
+    .protocol-meta,.overview-grid{grid-template-columns:1fr 1fr}
+    .photo-grid{grid-template-columns:1fr 1fr}
+    .protocol-photo{height:140px}
+    .signature-grid{grid-template-columns:1fr;gap:25px}
+  }
+  @media print{
+    @page{size:A4;margin:14mm}
+    body{background:#fff}
+    .app{padding:0;max-width:none}
+    .card{border:0;padding:0;box-shadow:none}
+    .protocol-section{break-inside:avoid}
+    .protocol-photo{break-inside:avoid}
+    .protocol-cover{break-after:auto}
+    .protocol-footer{position:relative}
+    .no-print{display:none!important}
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">Übergabe<span>Check</span></div>
+    <div class="badge">Prototyp · kostenlos</div>
+  </header>
+
+  <section class="hero">
+    <h1>Wohnungsübergabe ohne Papierchaos.</h1>
+    <p>Dokumentiere Räume, Mängel, Zählerstände und Schlüssel Schritt für Schritt. Am Ende entsteht ein übersichtliches Übergabeprotokoll.</p>
+    <div class="progress" id="progress"></div>
+  </section>
+
+  <section class="card" id="step1">
+    <h2>1. Grunddaten</h2>
+    <div class="sub">Ein paar Angaben zum Start.</div>
+    <div class="grid">
+      <div><label>Adresse</label><input id="address" placeholder="z. B. Musterstraße 12, 89518 Heidenheim"></div>
+      <div><label>Datum</label><input id="date" type="date"></div>
+      <div><label>Mieter</label><input id="tenant" placeholder="Vor- und Nachname"></div>
+      <div><label>Vermieter</label><input id="landlord" placeholder="Vor- und Nachname"></div>
+    </div>
+    <div class="actions"><span></span><button class="primary" onclick="go(2)">Weiter</button></div>
+  </section>
+
+  <section class="card hidden" id="step2">
+    <h2>2. Räume</h2>
+    <div class="sub">Welche Räume möchtest du dokumentieren?</div>
+    <div class="room-grid" id="rooms"></div>
+    <div class="actions"><button class="secondary" onclick="go(1)">Zurück</button><button class="primary" onclick="go(3)">Weiter</button></div>
+  </section>
+
+  <section class="card hidden" id="step3">
+    <h2>3. Raum dokumentieren</h2>
+    <div class="sub">Wähle einen Raum und halte den Zustand fest.</div>
+    <div class="grid">
+      <div>
+        <label>Raum</label>
+        <select id="roomSelect" onchange="loadRoom()"></select>
+      </div>
+      <div>
+        <label>Zustand</label>
+        <div class="choice-row">
+          <div class="choice" data-state="ok" onclick="setState('ok')">Ohne Mängel</div>
+          <div class="choice" data-state="wear" onclick="setState('wear')">Gebrauchsspuren</div>
+          <div class="choice" data-state="damage" onclick="setState('damage')">Mangel vorhanden</div>
+        </div>
+      </div>
+    </div>
+    <label>Beschreibung</label>
+    <textarea id="description" placeholder="z. B. Kratzer im Laminat vor der Balkontür."></textarea>
+    <label>Fotos</label>
+    <div class="photo-box">
+      <input id="photos" type="file" accept="image/*" multiple onchange="previewPhotos()">
+      <div>Fotos auswählen – auf dem Smartphone kann direkt die Kamera genutzt werden.</div>
+      <div class="photo-preview" id="photoPreview"></div>
+    </div>
+    <div class="actions"><button class="secondary" onclick="go(2)">Zurück</button><button class="primary" onclick="saveRoomAndNext()">Raum speichern</button></div>
+  </section>
+
+  <section class="card hidden" id="step4">
+    <h2>4. Zähler & Schlüssel</h2>
+    <div class="sub">Nur eintragen, was vorhanden ist.</div>
+    <div class="grid">
+      <div><label>Strom – Zählernummer</label><input id="electricNo" placeholder="optional"></div>
+      <div><label>Strom – Stand</label><input id="electric" placeholder="z. B. 12483 kWh"></div>
+      <div><label>Wasser – Zählernummer</label><input id="waterNo" placeholder="optional"></div>
+      <div><label>Wasser – Stand</label><input id="water" placeholder="z. B. 384 m³"></div>
+      <div><label>Gas – Zählernummer</label><input id="gasNo" placeholder="optional"></div>
+      <div><label>Gas – Stand</label><input id="gas" placeholder="z. B. 1520 m³"></div>
+    </div>
+    <label>Schlüssel</label>
+    <textarea id="keys" placeholder="z. B. 2 Wohnungsschlüssel, 2 Haustürschlüssel, 1 Briefkastenschlüssel"></textarea>
+    <label>Allgemeine Bemerkungen</label>
+    <textarea id="notes" placeholder="Sonstige Hinweise zur Übergabe"></textarea>
+    <div class="actions"><button class="secondary" onclick="go(3)">Zurück</button><button class="primary" onclick="showSummary()">Protokoll anzeigen</button></div>
+  </section>
+
+  <section class="card hidden" id="step5">
+    <h2>5. Übergabeprotokoll</h2>
+    <div class="sub">Deine Angaben als übersichtliche Dokumentation.</div>
+    <div id="summary"></div>
+    <div class="actions no-print"><button class="secondary" onclick="go(4)">Zurück</button><button class="primary" onclick="window.print()">Als PDF speichern / drucken</button></div>
+  </section>
+</div>
+
+<script>
+const roomNames=["Flur","Wohnzimmer","Schlafzimmer","Kinderzimmer","Küche","Badezimmer","WC","Balkon","Keller","Garage","Abstellraum"];
+let selectedRooms=["Flur","Wohnzimmer","Schlafzimmer","Küche","Badezimmer"];
+let roomData={};
+let currentRoom=selectedRooms[0];
+let currentState="ok";
+let photoURLs=[];
+
+document.getElementById("date").value=new Date().toISOString().slice(0,10);
+
+function renderRooms(){
+  document.getElementById("rooms").innerHTML=roomNames.map(r=>`
+    <div class="room ${selectedRooms.includes(r)?"selected":""}" onclick="toggleRoom('${r}')">
+      <strong>${r}</strong><small>${selectedRooms.includes(r)?"Ausgewählt":"Nicht ausgewählt"}</small>
+    </div>`).join("");
+}
+function renderProgress(step){
+  document.getElementById("progress").innerHTML=[1,2,3,4,5].map(n=>`<div class="dot ${n<=step?"active":""}"></div>`).join("");
+}
+function go(step){
+  document.querySelectorAll('[id^="step"]').forEach(x=>x.classList.add("hidden"));
+  document.getElementById("step"+step).classList.remove("hidden");
+  renderProgress(step);
+  if(step===2) renderRooms();
+  if(step===3){fillRoomSelect();loadRoom();}
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function toggleRoom(r){
+  if(selectedRooms.includes(r)) selectedRooms=selectedRooms.filter(x=>x!==r);
+  else selectedRooms.push(r);
+  renderRooms();
+}
+function fillRoomSelect(){
+  if(!selectedRooms.length) selectedRooms=["Flur"];
+  document.getElementById("roomSelect").innerHTML=selectedRooms.map(r=>`<option>${r}</option>`).join("");
+}
+function loadRoom(){
+  currentRoom=document.getElementById("roomSelect").value;
+  const d=roomData[currentRoom]||{state:"ok",description:"",photos:[]};
+  currentState=d.state;
+  document.getElementById("description").value=d.description||"";
+  document.querySelectorAll(".choice").forEach(x=>x.classList.toggle("active",x.dataset.state===currentState));
+  photoURLs=d.photos||[];
+  document.getElementById("photoPreview").innerHTML=photoURLs.map(u=>`<img src="${u}">`).join("");
+  document.getElementById("photos").value="";
+}
+function setState(s){
+  currentState=s;
+  document.querySelectorAll(".choice").forEach(x=>x.classList.toggle("active",x.dataset.state===s));
+}
+function previewPhotos(){
+  photoURLs=[];
+  [...document.getElementById("photos").files].forEach(file=>{
+    const url=URL.createObjectURL(file);
+    photoURLs.push(url);
+  });
+  document.getElementById("photoPreview").innerHTML=photoURLs.map(u=>`<img src="${u}">`).join("");
+}
+function saveRoomAndNext(){
+  roomData[currentRoom]={state:currentState,description:document.getElementById("description").value,photos:[...photoURLs]};
+  const idx=selectedRooms.indexOf(currentRoom);
+  if(idx<selectedRooms.length-1){
+    currentRoom=selectedRooms[idx+1];
+    document.getElementById("roomSelect").value=currentRoom;
+    loadRoom();
+    alert("Raum gespeichert. Jetzt kannst du den nächsten Raum dokumentieren.");
+  }else{
+    go(4);
+  }
+}
+function esc(s){return (s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function stateLabel(s){return s==="ok"?"Ohne festgestellte Mängel":s==="wear"?"Gebrauchsspuren":"Mangel vorhanden";}
+function showSummary(){
+  const rooms=selectedRooms.map(r=>{
+    const d=roomData[r]||{state:"ok",description:"",photos:[]};
+    const photos=(d.photos||[]).map((u,i)=>`<img class="protocol-photo" src="${u}" alt="Foto ${i+1}">`).join("");
+    return `<section class="protocol-section">
+      <div class="section-title"><span>${esc(r)}</span><span class="state-pill ${d.state}">${stateLabel(d.state)}</span></div>
+      ${d.description?`<div class="protocol-detail"><strong>Beschreibung</strong><div>${esc(d.description)}</div></div>`:""}
+      ${photos?`<div class="photo-grid">${photos}</div>`:""}
+      ${!d.description && !photos?`<div class="muted">Keine zusätzlichen Angaben dokumentiert.</div>`:""}
+    </section>`;
+  }).join("");
+
+  const dateRaw=document.getElementById("date").value;
+  const dateFormatted=dateRaw ? new Date(dateRaw+"T12:00:00").toLocaleDateString("de-DE") : "";
+
+  document.getElementById("summary").innerHTML=`
+    <div class="protocol">
+      <div class="protocol-cover">
+        <div class="protocol-kicker">WOHNUNGSÜBERGABE</div>
+        <h1>Übergabeprotokoll</h1>
+        <div class="protocol-address">${esc(document.getElementById("address").value)||"Adresse nicht angegeben"}</div>
+        <div class="protocol-meta">
+          <div><span>Datum</span><strong>${dateFormatted}</strong></div>
+          <div><span>Mieter</span><strong>${esc(document.getElementById("tenant").value)||"–"}</strong></div>
+          <div><span>Vermieter</span><strong>${esc(document.getElementById("landlord").value)||"–"}</strong></div>
+        </div>
+      </div>
+
+      <div class="protocol-section">
+        <div class="section-title"><span>Übergabeübersicht</span></div>
+        <div class="overview-grid">
+          <div><span>Dokumentierte Räume</span><strong>${selectedRooms.length}</strong></div>
+          <div><span>Dokumentierte Fotos</span><strong>${selectedRooms.reduce((n,r)=>n+((roomData[r]?.photos||[]).length),0)}</strong></div>
+          <div><span>Zählerstände</span><strong>${["electric","water","gas"].filter(id=>document.getElementById(id).value.trim()).length}</strong></div>
+          <div><span>Schlüssel</span><strong>${document.getElementById("keys").value.trim()?"Dokumentiert":"–"}</strong></div>
+        </div>
+      </div>
+
+      <div class="protocol-section">
+        <div class="section-title"><span>Zählerstände</span></div>
+        ${[
+          ["Strom","electricNo","electric","kWh"],
+          ["Wasser","waterNo","water","m³"],
+          ["Gas","gasNo","gas","m³"]
+        ].map(([name,no,val,unit])=>`
+          <div class="protocol-row">
+            <div><strong>${name}</strong><span>Zählernummer: ${esc(document.getElementById(no).value)||"–"}</span></div>
+            <strong>${esc(document.getElementById(val).value)||"–"} ${esc(document.getElementById(val).value)?unit:""}</strong>
+          </div>`).join("")}
+      </div>
+
+      <div class="protocol-section">
+        <div class="section-title"><span>Schlüsselübergabe</span></div>
+        <div class="protocol-detail">${esc(document.getElementById("keys").value)||"Keine Angaben dokumentiert."}</div>
+      </div>
+
+      <div class="protocol-section">
+        <div class="section-title"><span>Räume & Zustand</span></div>
+        ${rooms}
+      </div>
+
+      <div class="protocol-section">
+        <div class="section-title"><span>Allgemeine Bemerkungen</span></div>
+        <div class="protocol-detail">${esc(document.getElementById("notes").value)||"Keine weiteren Bemerkungen."}</div>
+      </div>
+
+      <div class="signature-section">
+        <div class="section-title"><span>Unterschriften</span></div>
+        <div class="signature-grid">
+          <div><div class="signature-line"></div><strong>Mieter</strong><span>Ort / Datum</span></div>
+          <div><div class="signature-line"></div><strong>Vermieter</strong><span>Ort / Datum</span></div>
+        </div>
+      </div>
+
+      <div class="protocol-footer">ÜbergabeCheck · Erstellt am ${new Date().toLocaleDateString("de-DE")}</div>
+    </div>`;
+  go(5);
+}
+renderRooms(); renderProgress(1);
+</script>
+</body>
+</html>
