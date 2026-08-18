@@ -1,0 +1,87 @@
+name: Update PDF buttons
+on:
+  push:
+    branches: [main]
+    paths:
+      - index.html
+      - .github/workflows/update-pdf-buttons.yml
+permissions:
+  contents: write
+jobs:
+  update:
+    if: "!contains(github.event.head_commit.message, 'Add separate PDF save and print buttons')"
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Update protocol actions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text(encoding='utf-8')
+          old = '''      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+        <button class="secondary" type="button" onclick="sendProtocolByEmail()">📧 Per E-Mail senden</button>
+        <button class="primary" onclick="window.print()">Als PDF speichern / drucken</button>
+      </div>'''
+          new = '''      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end">
+        <button class="secondary" type="button" onclick="sendProtocolByEmail()">📧 Per E-Mail senden</button>
+        <button class="secondary" type="button" onclick="saveProtocolPdf()">📄 PDF speichern</button>
+        <button class="primary" type="button" onclick="window.print()">🖨 Drucken</button>
+      </div>'''
+          if old not in s:
+              raise SystemExit('Protocol action buttons not found; aborting without changes.')
+          s = s.replace(old, new, 1)
+
+          marker = '''<script defer src="https://cloud.umami.is/script.js" data-website-id="a4c18987-08e8-480c-a3e7-a19b50232683" data-domains="smettmann.github.io"></script>'''
+          lib = marker + '''
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>'''
+          if 'html2pdf.bundle.min.js' not in s:
+              if marker not in s:
+                  raise SystemExit('Script insertion marker not found; aborting without changes.')
+              s = s.replace(marker, lib, 1)
+
+          fn_marker = '''function sendProtocolByEmail(){'''
+          fn = '''function saveProtocolPdf(){
+  const protocol = document.querySelector("#summary .protocol");
+  if(!protocol){
+    alert("Bitte zuerst das Übergabeprotokoll erstellen.");
+    return;
+  }
+  if(typeof html2pdf === "undefined"){
+    alert("Die PDF-Funktion ist noch nicht verfügbar. Bitte die Seite neu laden.");
+    return;
+  }
+  const address = document.getElementById("address")?.value.trim() || "Wohnungsübergabe";
+  const tenant = document.getElementById("tenant")?.value.trim() || "";
+  const safe = (address + (tenant ? " – " + tenant : ""))
+    .replace(/[^a-zA-Z0-9ÄÖÜäöüß _-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim() || "Wohnungsübergabe";
+  const filename = `Übergabeprotokoll – ${safe}.pdf`;
+  const options = {
+    margin: [10, 10, 10, 10],
+    filename,
+    image: { type: "jpeg", quality: 0.95 },
+    html2canvas: { scale: 2, useCORS: true, backgroundColor: "#ffffff" },
+    jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    pagebreak: { mode: ["css", "legacy"] }
+  };
+  html2pdf().set(options).from(protocol).save();
+}
+
+'''
+          if 'function saveProtocolPdf()' not in s:
+              if fn_marker not in s:
+                  raise SystemExit('Email function marker not found; aborting without changes.')
+              s = s.replace(fn_marker, fn + fn_marker, 1)
+
+          p.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Add separate PDF save and print buttons"
+          git push
