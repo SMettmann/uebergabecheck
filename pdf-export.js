@@ -42,9 +42,11 @@
       const img=new Image();
       img.onload=()=>{
         try{
-          const scale=Math.min(1,maxPx/Math.max(img.naturalWidth||img.width,img.naturalHeight||img.height));
-          const w=Math.max(1,Math.round((img.naturalWidth||img.width)*scale));
-          const h=Math.max(1,Math.round((img.naturalHeight||img.height)*scale));
+          const naturalW=img.naturalWidth||img.width;
+          const naturalH=img.naturalHeight||img.height;
+          const scale=Math.min(1,maxPx/Math.max(naturalW,naturalH));
+          const w=Math.max(1,Math.round(naturalW*scale));
+          const h=Math.max(1,Math.round(naturalH*scale));
           const canvas=document.createElement("canvas");
           canvas.width=w;canvas.height=h;
           const ctx=canvas.getContext("2d");
@@ -72,7 +74,6 @@
     const doc=new jsPDF({orientation:"portrait",unit:"mm",format:"a4",compress:true,putOnlyUsedFonts:true});
 
     const PAGE_W=210;
-    const PAGE_H=297;
     const M=14;
     const CONTENT_W=PAGE_W-(M*2);
     const BOTTOM=278;
@@ -125,7 +126,7 @@
       doc.setFillColor(245,245,246);doc.roundedRect(x,top,w,18,3,3,"F");
       setText(7.5,"normal",MUTED);doc.text(label.toUpperCase(),x+4,top+6);
       const lines=split(text,w-8,10,"bold").slice(0,2);
-      setText(10,"bold");doc.text(lines,x+4,top+12);
+      setText(10,"bold");doc.text(lines,x+4,top+12,{lineHeightFactor:1.05});
     };
 
     const drawTextBox=async(text,emptyText="Keine Angaben dokumentiert.")=>{
@@ -133,8 +134,8 @@
       const lineH=4.6;
       let index=0;
       while(index<allLines.length){
+        if(y>BOTTOM-15){newPage();continue;}
         const maxLines=Math.max(1,Math.floor((BOTTOM-y-10)/lineH));
-        if(maxLines<1){newPage();continue;}
         const lines=allLines.slice(index,index+maxLines);
         const h=8+(lines.length*lineH);
         ensure(h+2);
@@ -158,7 +159,6 @@
       const w=Math.min(62,doc.getTextWidth(st.label)+7);
       doc.setFillColor(...st.fill);doc.roundedRect(M+CONTENT_W-w,top,w,7,3.5,3.5,"F");
       doc.text(st.label,M+CONTENT_W-(w/2),top+4.7,{align:"center"});
-      return w;
     };
 
     const drawPhotos=async(urls)=>{
@@ -209,10 +209,10 @@
     doc.setDrawColor(...TEXT);doc.setLineWidth(.55);doc.line(M,y,M+CONTENT_W,y);y+=8;
 
     sectionTitle("Übergabeübersicht");
-    const photoCount=(window.selectedRooms||[]).reduce((n,r)=>n+((window.roomData?.[r]?.photos||[]).length),0);
+    const photoCount=selectedRooms.reduce((n,r)=>n+((roomData[r]?.photos||[]).length),0);
     const meterCount=["electric","water","gas"].filter(id=>(document.getElementById(id)?.value||"").trim()).length;
     const overview=[
-      ["Räume",String((window.selectedRooms||[]).length)],
+      ["Räume",String(selectedRooms.length)],
       ["Fotos",String(photoCount)],
       ["Zählerstände",String(meterCount)],
       ["Schlüssel",(document.getElementById("keys")?.value||"").trim()?"Dokumentiert":"–"]
@@ -231,11 +231,13 @@
     for(const meter of meters){
       ensure(17);
       setText(10.5,"bold");doc.text(meter.name,M,y+4);
-      setText(8,"normal",MUTED);doc.text(`Zählernummer: ${value(meter.no)}`,M,y+9);
+      const noLines=split(`Zählernummer: ${value(meter.no)}`,CONTENT_W*.65,8,"normal").slice(0,2);
+      setText(8,"normal",MUTED);doc.text(noLines,M,y+9,{lineHeightFactor:1.05});
       const meterVal=(document.getElementById(meter.val)?.value||"").trim();
-      setText(10.5,"bold");doc.text(meterVal?`${meterVal} ${meter.unit}`:"–",M+CONTENT_W,y+5,{align:"right"});
-      y+=13;
-      await drawPhotos(window.meterPhotos?.[meter.type]||[]);
+      const valLines=split(meterVal?`${meterVal} ${meter.unit}`:"–",CONTENT_W*.28,10.5,"bold").slice(0,2);
+      setText(10.5,"bold");doc.text(valLines,M+CONTENT_W,y+5,{align:"right",lineHeightFactor:1.05});
+      y+=Math.max(13,8+(Math.max(noLines.length,valLines.length)*3));
+      await drawPhotos(meterPhotos[meter.type]||[]);
       doc.setDrawColor(...LINE);doc.line(M,y,M+CONTENT_W,y);y+=5;
     }
 
@@ -243,19 +245,20 @@
     await drawTextBox((document.getElementById("keys")?.value||"").trim(),"Keine Angaben dokumentiert.");
 
     sectionTitle("Räume & Zustand");
-    for(const room of (window.selectedRooms||[])){
-      const d=window.roomData?.[room]||{state:"ok",description:"",photos:[]};
+    for(const room of selectedRooms){
+      const d=roomData[room]||{state:"ok",description:"",photos:[]};
       ensure(18);
-      setText(12,"bold");doc.text(String(room),M,y+4.5);
+      const roomLines=split(String(room),CONTENT_W-70,12,"bold").slice(0,2);
+      setText(12,"bold");doc.text(roomLines,M,y+4.5,{lineHeightFactor:1.05});
       drawStatePill(d.state,y);
-      y+=10;
+      y+=Math.max(10,5+(roomLines.length*4.5));
       if((d.description||"").trim()){
         const lines=split(d.description,CONTENT_W-10,9.5,"normal");
         let idx=0;
         while(idx<lines.length){
+          if(y>BOTTOM-18){newPage();continue;}
           const lineH=4.6;
-          const maxLines=Math.max(1,Math.floor((BOTTOM-y-10)/lineH));
-          if(maxLines<1){newPage();continue;}
+          const maxLines=Math.max(1,Math.floor((BOTTOM-y-12)/lineH));
           const part=lines.slice(idx,idx+maxLines);
           const h=9+(part.length*lineH);
           ensure(h+2);
@@ -298,10 +301,9 @@
       doc.text(placeLines,sig.x,y+38,{lineHeightFactor:1.15});
       doc.text(`Datum: ${sigDate}`,sig.x,y+46);
     }
-    y+=52;
 
     drawFooter();
-    return {blob:doc.output("blob"),filename:window.protocolPdfFilename?window.protocolPdfFilename():"Übergabeprotokoll.pdf"};
+    return {blob:doc.output("blob"),filename:protocolPdfFilename()};
   }
 
   window.createProtocolPdfBlob=createProtocolPdfBlob;
