@@ -1,7 +1,7 @@
 (function(){
   const ADS_CONFIG={
     enabled:false,
-    client:"",
+    client:"ca-pub-3457702577665056",
     landingSlot:"",
     resultSlot:""
   };
@@ -66,7 +66,45 @@
     return promo;
   }
 
+  function updatePrivacyForCurrentHostingAndAds(){
+    const overlay=document.getElementById("datenschutzOverlay");
+    if(!overlay||overlay.dataset.stratoAdsPrivacyUpdated==="1") return;
+
+    const headings=[...overlay.querySelectorAll("h3")];
+    const hostingHeading=headings.find(h=>h.textContent.trim()==="5. Hosting durch GitHub Pages");
+    if(hostingHeading){
+      hostingHeading.textContent="5. Hosting durch STRATO";
+      const paragraph=hostingHeading.nextElementSibling;
+      if(paragraph&&paragraph.tagName==="P"){
+        paragraph.innerHTML="Diese Website wird über <strong>STRATO</strong> bereitgestellt. Beim Aufruf der Website können technisch notwendige Verbindungsdaten wie insbesondere IP-Adresse, Zeitpunkt des Zugriffs, aufgerufene Ressource sowie Browser- und Geräteinformationen durch den Hostinganbieter verarbeitet werden. Dies dient der sicheren und zuverlässigen Bereitstellung der Website.";
+      }
+    }
+
+    const legalHeading=headings.find(h=>h.textContent.trim()==="6. Rechtsgrundlage");
+    if(legalHeading){
+      const adsHeading=document.createElement("h3");
+      adsHeading.textContent="6. Google AdSense und Consent Management";
+      const adsParagraph=document.createElement("p");
+      adsParagraph.innerHTML="Die kostenlose Version von ÜbergabeCheck ist technisch für die spätere Einbindung von <strong>Google AdSense</strong> vorbereitet. Anzeigen sind derzeit noch nicht aktiviert. Nach einer Freigabe und Aktivierung können durch Google – abhängig von deiner Einwilligung und den gewählten Einstellungen – unter anderem Geräte- und Browserinformationen, IP-Adresse sowie Werbe- und Consent-Informationen verarbeitet werden. Für Nutzer im Europäischen Wirtschaftsraum, im Vereinigten Königreich und in der Schweiz wird eine von Google zertifizierte Consent-Management-Plattform (CMP) eingesetzt. Dort kann die Einwilligung erteilt, abgelehnt oder über die Optionen verwaltet werden.";
+      legalHeading.before(adsHeading,adsParagraph);
+      legalHeading.textContent="7. Rechtsgrundlage";
+    }
+
+    const rightsHeading=headings.find(h=>h.textContent.trim()==="7. Deine Rechte");
+    if(rightsHeading) rightsHeading.textContent="8. Deine Rechte";
+    const changesHeading=headings.find(h=>h.textContent.trim()==="8. Änderungen");
+    if(changesHeading) changesHeading.textContent="9. Änderungen";
+
+    const notice=overlay.querySelector("p.notice");
+    if(notice){
+      notice.textContent="Hinweis: Diese Datenschutzerklärung beschreibt den aktuellen technischen Stand der Anwendung. Bei Aktivierung von Google AdSense, Änderungen am Hosting, Analytics oder weiteren Diensten wird sie entsprechend angepasst. Sie ersetzt keine individuelle rechtliche Prüfung.";
+    }
+
+    overlay.dataset.stratoAdsPrivacyUpdated="1";
+  }
+
   function mountAds(){
+    updatePrivacyForCurrentHostingAndAds();
     loadAdSense();
 
     const features=document.querySelector(".landing-features");
