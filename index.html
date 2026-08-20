@@ -469,6 +469,7 @@ async function sendProtocolByEmail(){
 function startApp(){clearDraft();selectedRooms=["Flur","Wohnzimmer","Schlafzimmer","Küche","Badezimmer"];roomData={};customRooms=[];meterPhotos={electric:[],water:[],gas:[]};if(window.umami)window.umami.track("Uebergabe gestartet");const landing=document.getElementById("landing");const app=document.getElementById("appContent");const header=document.getElementById("appHeader");const hero=document.getElementById("appHero");landing.style.display="none";landing.classList.add("hidden");app.classList.remove("hidden");app.style.display="block";header.style.display="none";hero.style.display="none";document.querySelectorAll('[id^="step"]').forEach(x=>x.classList.add("hidden"));document.getElementById("step1").classList.remove("hidden");renderProgress(1);document.documentElement.scrollTop=0;document.body.scrollTop=0;window.scrollTo(0,0);}
 loadDraft();renderAllMeterPhotos();renderProgress(1);updateCustomRoomNote();
 </script>
+<script src="pdf-export.js?v=2"></script>
 <script>document.addEventListener("DOMContentLoaded",function(){const date=document.getElementById("signatureDate");if(date&&!date.value){const now=new Date();const local=new Date(now.getTime()-now.getTimezoneOffset()*60000);date.value=local.toISOString().slice(0,10);}});</script>
 </body>
 </html>
