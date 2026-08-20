@@ -308,3 +308,20 @@
 
   window.createProtocolPdfBlob=createProtocolPdfBlob;
 })();
+
+(function loadFreeVersionAds(){
+  if(!document.querySelector('link[data-uebergabecheck-ads-style]')){
+    const link=document.createElement("link");
+    link.rel="stylesheet";
+    link.href="ads.css?v=1";
+    link.dataset.uebergabecheckAdsStyle="1";
+    document.head.appendChild(link);
+  }
+  if(!document.querySelector('script[data-uebergabecheck-ads-script]')){
+    const script=document.createElement("script");
+    script.src="ads.js?v=1";
+    script.async=false;
+    script.dataset.uebergabecheckAdsScript="1";
+    document.body.appendChild(script);
+  }
+})();
