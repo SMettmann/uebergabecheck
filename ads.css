@@ -1,3 +1,6 @@
+.landing-inner{position:relative}
+.uc-business-entry{position:absolute;top:0;right:0;display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:9px 13px;border:1px solid #d9dade;border-radius:999px;background:#fff;color:#222;text-decoration:none;font-size:12px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.uc-business-entry:hover{background:#f4f4f5}
 .uc-ad-zone{margin:24px 0 0;padding:0;text-align:center}
 .uc-ad-label{display:block;margin:0 0 7px;font-size:10px;line-height:1;text-transform:uppercase;letter-spacing:.12em;color:#9a9ba1}
 .uc-ad-slot{width:100%;min-height:96px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:14px;background:#fafafa}
@@ -9,11 +12,12 @@
 .uc-business-promo p{margin:0;color:#c9c9cc;font-size:13px;line-height:1.5}
 .uc-business-promo a{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 14px;border-radius:11px;background:#fff;color:#111;text-decoration:none;font-size:13px;font-weight:800;white-space:nowrap}
 @media(max-width:700px){
+  .uc-business-entry{position:static;margin:0 auto 18px;width:max-content;max-width:100%}
   .uc-ad-zone{margin-top:18px}
   .uc-ad-slot{min-height:74px}
   .uc-business-promo{flex-direction:column;align-items:stretch}
   .uc-business-promo a{width:100%}
 }
 @media print{
-  .uc-ad-zone,.uc-business-promo{display:none!important}
+  .uc-business-entry,.uc-ad-zone,.uc-business-promo{display:none!important}
 }
