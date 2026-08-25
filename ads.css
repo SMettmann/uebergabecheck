@@ -2,8 +2,13 @@
 .uc-ad-label{display:block;margin:0 0 7px;font-size:10px;line-height:1;text-transform:uppercase;letter-spacing:.12em;color:#9a9ba1}
 .uc-ad-slot{width:100%;min-height:96px;display:flex;align-items:center;justify-content:center;overflow:hidden;border-radius:14px;background:#fafafa}
 .uc-ad-slot:empty{display:none}
-.uc-business-entry{display:inline-flex;align-items:center;justify-content:center;margin:0 0 18px;padding:8px 12px;border:1px solid #ddd;border-radius:999px;background:#fff;color:#333;text-decoration:none;font-size:12px;font-weight:800}
-.uc-business-entry:hover{background:#f0f1f3}
+.uc-business-entry{max-width:760px;margin:28px auto 0;padding:22px 24px;border:1px solid #e2b900;border-radius:20px;background:#ffd84d;color:#111;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:22px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+.uc-business-entry-copy{min-width:0}
+.uc-business-entry-badge{display:inline-flex;align-items:center;justify-content:center;margin-bottom:8px;padding:5px 8px;border-radius:999px;background:#111;color:#fff;font-size:10px;font-weight:900;letter-spacing:.12em}
+.uc-business-entry strong{display:block;font-size:22px;line-height:1.15;letter-spacing:-.35px;margin-bottom:7px}
+.uc-business-entry p{margin:0;max-width:560px;color:#2f2a14;font-size:14px;line-height:1.55}
+.uc-business-entry>a{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:46px;padding:12px 16px;border-radius:12px;background:#111;color:#fff;text-decoration:none;font-size:13px;font-weight:850;white-space:nowrap;box-shadow:0 5px 14px rgba(0,0,0,.12)}
+.uc-business-entry>a:hover{transform:translateY(-1px)}
 .uc-business-promo{margin:22px 0 0;padding:20px;border:1px solid #e2e3e6;border-radius:18px;background:#111;color:#fff;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:18px}
 .uc-business-promo-copy{min-width:0}
 .uc-business-promo-kicker{display:block;margin-bottom:6px;font-size:11px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#aaa}
@@ -13,7 +18,9 @@
 @media(max-width:700px){
   .uc-ad-zone{margin-top:18px}
   .uc-ad-slot{min-height:74px}
-  .uc-business-entry{margin-bottom:14px}
+  .uc-business-entry{margin-top:22px;padding:20px;flex-direction:column;align-items:stretch}
+  .uc-business-entry strong{font-size:20px}
+  .uc-business-entry>a{width:100%}
   .uc-business-promo{flex-direction:column;align-items:stretch}
   .uc-business-promo a{width:100%}
 }
