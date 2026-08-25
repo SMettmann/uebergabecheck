@@ -67,11 +67,16 @@
   }
 
   function createBusinessEntry(){
-    const link=document.createElement("a");
-    link.className="uc-business-entry no-print";
-    link.href="/business/";
-    link.textContent="Für Unternehmen →";
-    return link;
+    const entry=document.createElement("aside");
+    entry.className="uc-business-entry no-print";
+    entry.innerHTML=`
+      <div class="uc-business-entry-copy">
+        <span class="uc-business-entry-badge">BUSINESS</span>
+        <strong>ÜbergabeCheck für Unternehmen</strong>
+        <p>Mehrere Objekte, Wohnungen, Übergaben und Mängel zentral verwalten – mit der Business-Version von ÜbergabeCheck.</p>
+      </div>
+      <a href="/business/">Zur Business-Version →</a>`;
+    return entry;
   }
 
   function updatePrivacyForCurrentHostingAndAds(){
@@ -115,10 +120,9 @@
     updatePrivacyForCurrentHostingAndAds();
     loadAdSense();
 
-    const landingInner=document.querySelector(".landing-inner");
-    const landingLogo=document.querySelector(".landing-logo");
-    if(landingInner&&landingLogo&&!document.querySelector(".uc-business-entry")){
-      landingLogo.insertAdjacentElement("afterend",createBusinessEntry());
+    const landingButton=document.querySelector(".landing-button");
+    if(landingButton&&!document.querySelector(".uc-business-entry")){
+      landingButton.insertAdjacentElement("afterend",createBusinessEntry());
     }
 
     const features=document.querySelector(".landing-features");
