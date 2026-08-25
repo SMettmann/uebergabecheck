@@ -53,6 +53,15 @@
     return zone;
   }
 
+  function createBusinessEntry(){
+    const link=document.createElement("a");
+    link.className="uc-business-entry no-print";
+    link.href="/business/";
+    link.textContent="Für Unternehmen →";
+    link.setAttribute("aria-label","ÜbergabeCheck Business öffnen");
+    return link;
+  }
+
   function createBusinessPromo(){
     const promo=document.createElement("aside");
     promo.className="uc-business-promo no-print";
@@ -60,9 +69,9 @@
       <div class="uc-business-promo-copy">
         <span class="uc-business-promo-kicker">ÜbergabeCheck Business</span>
         <strong>Übergaben regelmäßig durchführen?</strong>
-        <p>Für Vermieter, Hausverwaltungen und Unternehmen entwickeln wir eine erweiterte Version von ÜbergabeCheck.</p>
+        <p>Objekte, Wohnungen, Übergaben und Mängel zentral verwalten – für Vermieter, Hausverwaltungen und Unternehmen.</p>
       </div>
-      <a href="mailto:info@uebergabe-check.de?subject=Interesse%20an%20%C3%9CbergabeCheck%20Business">Mehr erfahren →</a>`;
+      <a href="/business/">Business öffnen →</a>`;
     return promo;
   }
 
@@ -106,6 +115,11 @@
   function mountAds(){
     updatePrivacyForCurrentHostingAndAds();
     loadAdSense();
+
+    const landingInner=document.querySelector(".landing-inner");
+    if(landingInner&&!document.querySelector(".uc-business-entry")){
+      landingInner.appendChild(createBusinessEntry());
+    }
 
     const features=document.querySelector(".landing-features");
     if(features&&!document.querySelector('[data-ad-position="landing"]')){
