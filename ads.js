@@ -53,15 +53,6 @@
     return zone;
   }
 
-  function createBusinessEntry(){
-    const link=document.createElement("a");
-    link.className="uc-business-entry no-print";
-    link.href="/business/";
-    link.textContent="Für Unternehmen →";
-    link.setAttribute("aria-label","ÜbergabeCheck Business öffnen");
-    return link;
-  }
-
   function createBusinessPromo(){
     const promo=document.createElement("aside");
     promo.className="uc-business-promo no-print";
@@ -71,8 +62,16 @@
         <strong>Übergaben regelmäßig durchführen?</strong>
         <p>Objekte, Wohnungen, Übergaben und Mängel zentral verwalten – für Vermieter, Hausverwaltungen und Unternehmen.</p>
       </div>
-      <a href="/business/">Business öffnen →</a>`;
+      <a href="/business/">Business ansehen →</a>`;
     return promo;
+  }
+
+  function createBusinessEntry(){
+    const link=document.createElement("a");
+    link.className="uc-business-entry no-print";
+    link.href="/business/";
+    link.textContent="Für Unternehmen →";
+    return link;
   }
 
   function updatePrivacyForCurrentHostingAndAds(){
@@ -117,8 +116,9 @@
     loadAdSense();
 
     const landingInner=document.querySelector(".landing-inner");
-    if(landingInner&&!document.querySelector(".uc-business-entry")){
-      landingInner.appendChild(createBusinessEntry());
+    const landingLogo=document.querySelector(".landing-logo");
+    if(landingInner&&landingLogo&&!document.querySelector(".uc-business-entry")){
+      landingLogo.insertAdjacentElement("afterend",createBusinessEntry());
     }
 
     const features=document.querySelector(".landing-features");
