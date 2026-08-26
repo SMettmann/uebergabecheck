@@ -1,0 +1,55 @@
+name: Restore Business entry and improve homepage loading
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Restore Business entry and remove blocking legacy PDF library
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text()
+
+          legacy='<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>\n'
+          if legacy in s:
+              s=s.replace(legacy,'',1)
+
+          style_tag='<link rel="stylesheet" href="ads.css?v=3">'
+          if style_tag not in s:
+              anchor='</style>\n<script defer src="https://cloud.umami.is/script.js"'
+              if anchor not in s:
+                  raise SystemExit('style/script anchor not found')
+              s=s.replace(anchor,'</style>\n'+style_tag+'\n<script defer src="https://cloud.umami.is/script.js"',1)
+
+          ads_script='<script defer src="ads.js?v=3"></script>'
+          if ads_script not in s:
+              anchor='</head>\n<body>'
+              if anchor not in s:
+                  raise SystemExit('head anchor not found')
+              s=s.replace(anchor,ads_script+'\n</head>\n<body>',1)
+
+          p.write_text(s)
+          PY
+      - name: Validate
+        run: |
+          grep -q 'ads.css?v=3' index.html
+          grep -q 'ads.js?v=3' index.html
+          ! grep -q 'html2pdf.bundle.min.js' index.html
+          grep -q 'Zur Business-Version' ads.js
+          grep -q 'href="/business/"' ads.js
+          grep -q '.uc-business-entry' ads.css
+      - name: Commit result
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm .github/workflows/restore-business-performance.yml
+          git add index.html
+          git commit -m 'Restore Business entry and speed up homepage'
+          git push origin main
