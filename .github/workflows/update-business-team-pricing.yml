@@ -1,0 +1,38 @@
+name: Update public Business team pricing
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/update_business_team_pricing.py
+      - .github/workflows/update-business-team-pricing.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Update pricing
+        run: python tools/update_business_team_pricing.py
+      - name: Validate
+        run: |
+          grep -q "Inhaber + bis zu 10 Mitarbeiter inklusive" business/index.html
+          grep -q "Teamverwaltung mit Inhaber-, Admin-" business/index.html
+      - name: Commit
+        run: |
+          if git diff --quiet -- business/index.html; then
+            echo "Pricing already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add business/index.html
+          git commit -m "Update Business pricing for included team accounts"
+          git push
