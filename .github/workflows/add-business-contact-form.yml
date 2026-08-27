@@ -1,0 +1,30 @@
+name: Add Business contact form
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/contact-form-trigger.txt'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply contact form patch
+        run: python scripts/add_business_contact_form.py
+      - name: Validate contact form
+        run: |
+          grep -q 'id="businessContactForm"' business/index.html
+          grep -q 'contact-message' business/index.html
+          grep -q 'Kontaktformular' business/index.html
+      - name: Commit contact form
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git rm -f .github/contact-form-trigger.txt .github/workflows/add-business-contact-form.yml scripts/add_business_contact_form.py
+          git add business/index.html
+          git commit -m 'Add public Business contact form'
+          git push origin main
