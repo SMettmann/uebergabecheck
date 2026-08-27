@@ -1,1 +1,1 @@
-Run Resend privacy patch 2026-08-27.
+Retry Resend privacy patch 2026-08-27.
