@@ -116,8 +116,38 @@
     overlay.dataset.stratoAdsPrivacyUpdated="1";
   }
 
+  function returnPrivateAppToHome(){
+    const landing=document.getElementById("landing");
+    const app=document.getElementById("appContent");
+    if(!landing||!app) return;
+
+    app.classList.add("hidden");
+    app.style.display="none";
+    landing.classList.remove("hidden");
+    landing.style.removeProperty("display");
+    document.documentElement.scrollTop=0;
+    document.body.scrollTop=0;
+    window.scrollTo(0,0);
+  }
+
+  function mountPrivateHomeButton(){
+    const step1=document.getElementById("step1");
+    const actions=step1?.querySelector(".actions");
+    if(!actions) return;
+
+    const button=[...actions.querySelectorAll("button")].find(btn=>btn.getAttribute("onclick")==="newTransfer()");
+    if(!button||button.dataset.homeButtonMounted==="1") return;
+
+    button.dataset.homeButtonMounted="1";
+    button.removeAttribute("onclick");
+    button.type="button";
+    button.textContent="← Zurück zur Startseite";
+    button.addEventListener("click",returnPrivateAppToHome);
+  }
+
   function mountAds(){
     updatePrivacyForCurrentHostingAndAds();
+    mountPrivateHomeButton();
     loadAdSense();
 
     const landingButton=document.querySelector(".landing-button");
