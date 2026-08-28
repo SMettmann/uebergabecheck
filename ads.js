@@ -130,24 +130,25 @@
     window.scrollTo(0,0);
   }
 
-  function mountPrivateHomeButton(){
-    const step1=document.getElementById("step1");
-    const actions=step1?.querySelector(".actions");
-    if(!actions) return;
+  function mountPrivateHomeButtons(){
+    [1,2,3,4,5].forEach(stepNo=>{
+      const step=document.getElementById(`step${stepNo}`);
+      if(!step||step.querySelector(".private-home-button")) return;
 
-    const button=[...actions.querySelectorAll("button")].find(btn=>btn.getAttribute("onclick")==="newTransfer()");
-    if(!button||button.dataset.homeButtonMounted==="1") return;
-
-    button.dataset.homeButtonMounted="1";
-    button.removeAttribute("onclick");
-    button.type="button";
-    button.textContent="← Zurück zur Startseite";
-    button.addEventListener("click",returnPrivateAppToHome);
+      const button=document.createElement("button");
+      button.type="button";
+      button.className="secondary no-print private-home-button";
+      button.textContent="← Zurück zur Startseite";
+      button.style.marginBottom="18px";
+      button.style.padding="10px 14px";
+      button.addEventListener("click",returnPrivateAppToHome);
+      step.insertBefore(button,step.firstChild);
+    });
   }
 
   function mountAds(){
     updatePrivacyForCurrentHostingAndAds();
-    mountPrivateHomeButton();
+    mountPrivateHomeButtons();
     loadAdSense();
 
     const landingButton=document.querySelector(".landing-button");
