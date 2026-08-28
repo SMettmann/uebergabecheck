@@ -121,60 +121,106 @@
     const app=document.getElementById("appContent");
     if(!landing||!app) return;
 
+    document.querySelectorAll('[id^="step"]').forEach(step=>step.classList.add("hidden"));
     app.classList.add("hidden");
     app.style.display="none";
     landing.classList.remove("hidden");
-    landing.style.removeProperty("display");
+    landing.style.display="";
     document.documentElement.scrollTop=0;
     document.body.scrollTop=0;
     window.scrollTo(0,0);
   }
 
-  function mountPrivateHomeButtons(){
+  function makeHomeButton(){
+    const button=document.createElement("button");
+    button.type="button";
+    button.className="secondary no-print private-home-button";
+    button.textContent="\u2190 Zur\u00fcck zur Startseite";
+    button.dataset.privateHomeButton="1";
+    button.addEventListener("click",returnPrivateAppToHome);
+    return button;
+  }
+
+  function installPrivateHomeButtons(){
     [1,2,3,4,5].forEach(stepNo=>{
       const step=document.getElementById(`step${stepNo}`);
-      if(!step||step.querySelector(".private-home-button")) return;
+      const actions=step?.querySelector(".actions");
+      if(!step||!actions) return;
 
-      const button=document.createElement("button");
-      button.type="button";
-      button.className="secondary no-print private-home-button";
-      button.textContent="← Zurück zur Startseite";
-      button.style.marginBottom="18px";
-      button.style.padding="10px 14px";
-      button.addEventListener("click",returnPrivateAppToHome);
-      step.insertBefore(button,step.firstChild);
+      if(stepNo===1){
+        const oldNewTransfer=[...actions.querySelectorAll("button")].find(btn=>btn.getAttribute("onclick")==="newTransfer()");
+        if(oldNewTransfer){
+          const home=makeHomeButton();
+          oldNewTransfer.replaceWith(home);
+        }else if(!actions.querySelector('[data-private-home-button="1"]')){
+          actions.insertBefore(makeHomeButton(),actions.firstChild);
+        }
+        return;
+      }
+
+      if(actions.querySelector('[data-private-home-button="1"]')) return;
+
+      const existingBack=[...actions.children].find(el=>el.tagName==="BUTTON"&&el.textContent.trim()==="Zurück");
+      const leftGroup=document.createElement("div");
+      leftGroup.className="private-nav-left no-print";
+      leftGroup.style.display="flex";
+      leftGroup.style.gap="10px";
+      leftGroup.style.flexWrap="wrap";
+      leftGroup.style.alignItems="center";
+
+      if(existingBack){
+        actions.insertBefore(leftGroup,existingBack);
+        leftGroup.appendChild(existingBack);
+      }else{
+        actions.insertBefore(leftGroup,actions.firstChild);
+      }
+      leftGroup.appendChild(makeHomeButton());
     });
   }
 
-  function mountAds(){
-    updatePrivacyForCurrentHostingAndAds();
-    mountPrivateHomeButtons();
-    loadAdSense();
+  function mountExtras(){
+    try{installPrivateHomeButtons();}catch(e){console.error("Home-Buttons konnten nicht eingebaut werden",e);}
 
-    const landingButton=document.querySelector(".landing-button");
-    if(landingButton&&!document.querySelector(".uc-business-entry")){
-      landingButton.insertAdjacentElement("afterend",createBusinessEntry());
-    }
+    try{updatePrivacyForCurrentHostingAndAds();}catch(e){console.warn("Datenschutz-Anpassung fehlgeschlagen",e);}
+    try{loadAdSense();}catch(e){console.warn("AdSense-Initialisierung fehlgeschlagen",e);}
 
-    const features=document.querySelector(".landing-features");
-    if(features&&!document.querySelector('[data-ad-position="landing"]')){
-      features.insertAdjacentElement("afterend",createAdZone(ADS_CONFIG.landingSlot,"landing"));
-    }
+    try{
+      const landingButton=document.querySelector(".landing-button");
+      if(landingButton&&!document.querySelector(".uc-business-entry")){
+        landingButton.insertAdjacentElement("afterend",createBusinessEntry());
+      }
 
-    const step5=document.getElementById("step5");
-    const actions=step5?.querySelector(".actions.no-print");
-    if(actions&&!document.querySelector('[data-ad-position="result"]')){
-      const resultAd=createAdZone(ADS_CONFIG.resultSlot,"result");
-      actions.insertAdjacentElement("afterend",resultAd);
-      resultAd.insertAdjacentElement("afterend",createBusinessPromo());
-    }
+      const features=document.querySelector(".landing-features");
+      if(features&&!document.querySelector('[data-ad-position="landing"]')){
+        features.insertAdjacentElement("afterend",createAdZone(ADS_CONFIG.landingSlot,"landing"));
+      }
+
+      const step5=document.getElementById("step5");
+      const actions=step5?.querySelector(".actions.no-print");
+      if(actions&&!document.querySelector('[data-ad-position="result"]')){
+        const resultAd=createAdZone(ADS_CONFIG.resultSlot,"result");
+        actions.insertAdjacentElement("afterend",resultAd);
+        resultAd.insertAdjacentElement("afterend",createBusinessPromo());
+      }
+    }catch(e){console.warn("Zusatzinhalte konnten nicht vollständig eingebaut werden",e);}
   }
 
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",mountAds,{once:true});
-  else mountAds();
+  function mountReliably(){
+    mountExtras();
+    setTimeout(mountExtras,50);
+    setTimeout(mountExtras,500);
+  }
+
+  if(document.readyState==="loading"){
+    document.addEventListener("DOMContentLoaded",mountReliably,{once:true});
+  }else{
+    mountReliably();
+  }
+  window.addEventListener("load",mountExtras,{once:true});
 
   window.UebergabeCheckAds={
     config:ADS_CONFIG,
-    mount:mountAds
+    mount:mountExtras,
+    installHomeButtons:installPrivateHomeButtons
   };
 })();
