@@ -59,10 +59,11 @@
     return zone;
   }
 
-  function createCheck24Promo(){
+  function createCheck24Promo(position="result"){
     const zone=document.createElement("aside");
     zone.className="uc-ad-zone no-print";
     zone.dataset.partner="check24";
+    zone.dataset.partnerPosition=position;
 
     const label=document.createElement("span");
     label.className="uc-ad-label";
@@ -81,7 +82,7 @@
     link.style.display="inline-block";
     link.style.maxWidth="100%";
     link.addEventListener("click",()=>{
-      try{if(window.umami)window.umami.track("CHECK24 Strom geklickt");}catch(e){}
+      try{if(window.umami)window.umami.track(position==="landing"?"CHECK24 Startseite geklickt":"CHECK24 Strom geklickt");}catch(e){}
     });
 
     const image=document.createElement("img");
@@ -145,7 +146,7 @@
       const affiliateHeading=document.createElement("h3");
       affiliateHeading.textContent="6. Partnerwerbung über Awin / CHECK24";
       const affiliateParagraph=document.createElement("p");
-      affiliateParagraph.innerHTML="Am Ende des erstellten Übergabeprotokolls zeigen wir ein als Werbung gekennzeichnetes <strong>CHECK24-Partnerangebot</strong> über das Affiliate-Netzwerk <strong>Awin</strong>. Das Werbemittel wird von awin1.com geladen. Dabei können technisch notwendige Verbindungsdaten wie insbesondere IP-Adresse, Zeitpunkt des Abrufs sowie Browser- und Geräteinformationen an Awin übermittelt werden. Bei einem Klick erfolgt die Weiterleitung über Awin zu CHECK24. Kommt anschließend ein vergüteter Abschluss zustande, kann dieser über das Affiliate-Tracking ÜbergabeCheck zugeordnet werden; wir können hierfür eine Provision erhalten.";
+      affiliateParagraph.innerHTML="Auf der Startseite und am Ende des erstellten Übergabeprotokolls zeigen wir ein als Werbung gekennzeichnetes <strong>CHECK24-Partnerangebot</strong> über das Affiliate-Netzwerk <strong>Awin</strong>. Das Werbemittel wird von awin1.com geladen. Dabei können technisch notwendige Verbindungsdaten wie insbesondere IP-Adresse, Zeitpunkt des Abrufs sowie Browser- und Geräteinformationen an Awin übermittelt werden. Bei einem Klick erfolgt die Weiterleitung über Awin zu CHECK24. Kommt anschließend ein vergüteter Abschluss zustande, kann dieser über das Affiliate-Tracking ÜbergabeCheck zugeordnet werden; wir können hierfür eine Provision erhalten.";
 
       const adsHeading=document.createElement("h3");
       adsHeading.textContent="7. Google AdSense und Consent Management";
@@ -238,9 +239,9 @@
     const actions=step5.querySelector(".actions.no-print");
     if(!actions) return;
 
-    let partner=document.querySelector('[data-partner="check24"]');
+    let partner=document.querySelector('[data-partner="check24"][data-partner-position="result"]');
     if(!partner){
-      partner=createCheck24Promo();
+      partner=createCheck24Promo("result");
       actions.insertAdjacentElement("afterend",partner);
     }
 
@@ -274,6 +275,9 @@
       }
 
       const features=document.querySelector(".landing-features");
+      if(features&&!document.querySelector('[data-partner="check24"][data-partner-position="landing"]')){
+        features.insertAdjacentElement("afterend",createCheck24Promo("landing"));
+      }
       if(features&&!document.querySelector('[data-ad-position="landing"]')){
         features.insertAdjacentElement("afterend",createAdZone(ADS_CONFIG.landingSlot,"landing"));
       }
