@@ -6,6 +6,12 @@
     resultSlot:""
   };
 
+  const CHECK24_CONFIG={
+    clickUrl:"https://www.awin1.com/cread.php?s=2126222&v=9364&q=332953&r=3068167",
+    imageUrl:"https://www.awin1.com/cshow.php?s=2126222&v=9364&q=332953&r=3068167",
+    alt:"Stromanbieter über CHECK24 vergleichen"
+  };
+
   let adsenseLoaded=false;
 
   function loadAdSense(){
@@ -53,6 +59,47 @@
     return zone;
   }
 
+  function createCheck24Promo(){
+    const zone=document.createElement("aside");
+    zone.className="uc-ad-zone no-print";
+    zone.dataset.partner="check24";
+
+    const label=document.createElement("span");
+    label.className="uc-ad-label";
+    label.textContent="Werbung · Partnerlink";
+
+    const holder=document.createElement("div");
+    holder.className="uc-ad-slot";
+    holder.style.minHeight="0";
+    holder.style.background="transparent";
+
+    const link=document.createElement("a");
+    link.href=CHECK24_CONFIG.clickUrl;
+    link.target="_blank";
+    link.rel="sponsored noopener noreferrer";
+    link.setAttribute("aria-label",CHECK24_CONFIG.alt);
+    link.style.display="inline-block";
+    link.style.maxWidth="100%";
+    link.addEventListener("click",()=>{
+      try{if(window.umami)window.umami.track("CHECK24 Strom geklickt");}catch(e){}
+    });
+
+    const image=document.createElement("img");
+    image.src=CHECK24_CONFIG.imageUrl;
+    image.alt=CHECK24_CONFIG.alt;
+    image.loading="lazy";
+    image.decoding="async";
+    image.style.display="block";
+    image.style.maxWidth="100%";
+    image.style.height="auto";
+    image.style.border="0";
+
+    link.appendChild(image);
+    holder.appendChild(link);
+    zone.append(label,holder);
+    return zone;
+  }
+
   function createBusinessPromo(){
     const promo=document.createElement("aside");
     promo.className="uc-business-promo no-print";
@@ -95,22 +142,28 @@
 
     const legalHeading=headings.find(h=>h.textContent.trim()==="6. Rechtsgrundlage");
     if(legalHeading){
+      const affiliateHeading=document.createElement("h3");
+      affiliateHeading.textContent="6. Partnerwerbung über Awin / CHECK24";
+      const affiliateParagraph=document.createElement("p");
+      affiliateParagraph.innerHTML="Am Ende des erstellten Übergabeprotokolls zeigen wir ein als Werbung gekennzeichnetes <strong>CHECK24-Partnerangebot</strong> über das Affiliate-Netzwerk <strong>Awin</strong>. Das Werbemittel wird von awin1.com geladen. Dabei können technisch notwendige Verbindungsdaten wie insbesondere IP-Adresse, Zeitpunkt des Abrufs sowie Browser- und Geräteinformationen an Awin übermittelt werden. Bei einem Klick erfolgt die Weiterleitung über Awin zu CHECK24. Kommt anschließend ein vergüteter Abschluss zustande, kann dieser über das Affiliate-Tracking ÜbergabeCheck zugeordnet werden; wir können hierfür eine Provision erhalten.";
+
       const adsHeading=document.createElement("h3");
-      adsHeading.textContent="6. Google AdSense und Consent Management";
+      adsHeading.textContent="7. Google AdSense und Consent Management";
       const adsParagraph=document.createElement("p");
-      adsParagraph.innerHTML="Die kostenlose Version von ÜbergabeCheck ist technisch für die spätere Einbindung von <strong>Google AdSense</strong> vorbereitet. Anzeigen sind derzeit noch nicht aktiviert. Nach einer Freigabe und Aktivierung können durch Google – abhängig von deiner Einwilligung und den gewählten Einstellungen – unter anderem Geräte- und Browserinformationen, IP-Adresse sowie Werbe- und Consent-Informationen verarbeitet werden. Für Nutzer im Europäischen Wirtschaftsraum, im Vereinigten Königreich und in der Schweiz wird eine von Google zertifizierte Consent-Management-Plattform (CMP) eingesetzt. Dort kann die Einwilligung erteilt, abgelehnt oder über die Optionen verwaltet werden.";
-      legalHeading.before(adsHeading,adsParagraph);
-      legalHeading.textContent="7. Rechtsgrundlage";
+      adsParagraph.innerHTML="Die kostenlose Version von ÜbergabeCheck ist technisch für die spätere Einbindung von <strong>Google AdSense</strong> vorbereitet. Google-AdSense-Anzeigen sind derzeit nicht aktiviert. Nach einer späteren Aktivierung können durch Google – abhängig von deiner Einwilligung und den gewählten Einstellungen – unter anderem Geräte- und Browserinformationen, IP-Adresse sowie Werbe- und Consent-Informationen verarbeitet werden. Für Nutzer im Europäischen Wirtschaftsraum, im Vereinigten Königreich und in der Schweiz wird bei einer Aktivierung eine von Google zertifizierte Consent-Management-Plattform (CMP) eingesetzt.";
+
+      legalHeading.before(affiliateHeading,affiliateParagraph,adsHeading,adsParagraph);
+      legalHeading.textContent="8. Rechtsgrundlage";
     }
 
     const rightsHeading=headings.find(h=>h.textContent.trim()==="7. Deine Rechte");
-    if(rightsHeading) rightsHeading.textContent="8. Deine Rechte";
+    if(rightsHeading) rightsHeading.textContent="9. Deine Rechte";
     const changesHeading=headings.find(h=>h.textContent.trim()==="8. Änderungen");
-    if(changesHeading) changesHeading.textContent="9. Änderungen";
+    if(changesHeading) changesHeading.textContent="10. Änderungen";
 
     const notice=overlay.querySelector("p.notice");
     if(notice){
-      notice.textContent="Hinweis: Diese Datenschutzerklärung beschreibt den aktuellen technischen Stand der Anwendung. Bei Aktivierung von Google AdSense, Änderungen am Hosting, Analytics oder weiteren Diensten wird sie entsprechend angepasst. Sie ersetzt keine individuelle rechtliche Prüfung.";
+      notice.textContent="Hinweis: Diese Datenschutzerklärung beschreibt den aktuellen technischen Stand der Anwendung einschließlich der CHECK24-Partnerwerbung über Awin. Google AdSense ist technisch vorbereitet, derzeit aber nicht aktiviert. Bei Änderungen am Hosting, Analytics oder weiteren Diensten wird die Datenschutzerklärung entsprechend angepasst. Sie ersetzt keine individuelle rechtliche Prüfung.";
     }
 
     overlay.dataset.stratoAdsPrivacyUpdated="1";
@@ -178,6 +231,36 @@
     });
   }
 
+  function mountCheck24Result(){
+    const step5=document.getElementById("step5");
+    if(!step5||step5.classList.contains("hidden")) return;
+
+    const actions=step5.querySelector(".actions.no-print");
+    if(!actions) return;
+
+    let partner=document.querySelector('[data-partner="check24"]');
+    if(!partner){
+      partner=createCheck24Promo();
+      actions.insertAdjacentElement("afterend",partner);
+    }
+
+    if(!document.querySelector(".uc-business-promo")){
+      partner.insertAdjacentElement("afterend",createBusinessPromo());
+    }
+  }
+
+  function observeResultStep(){
+    const step5=document.getElementById("step5");
+    if(!step5) return;
+
+    if(step5.dataset.check24Observer!=="1"){
+      const observer=new MutationObserver(mountCheck24Result);
+      observer.observe(step5,{attributes:true,attributeFilter:["class"]});
+      step5.dataset.check24Observer="1";
+    }
+    mountCheck24Result();
+  }
+
   function mountExtras(){
     try{installPrivateHomeButtons();}catch(e){console.error("Home-Buttons konnten nicht eingebaut werden",e);}
 
@@ -195,13 +278,9 @@
         features.insertAdjacentElement("afterend",createAdZone(ADS_CONFIG.landingSlot,"landing"));
       }
 
-      const step5=document.getElementById("step5");
-      const actions=step5?.querySelector(".actions.no-print");
-      if(actions&&!document.querySelector('[data-ad-position="result"]')){
-        const resultAd=createAdZone(ADS_CONFIG.resultSlot,"result");
-        actions.insertAdjacentElement("afterend",resultAd);
-        resultAd.insertAdjacentElement("afterend",createBusinessPromo());
-      }
+      const oldResultAd=document.querySelector('[data-ad-position="result"]');
+      if(oldResultAd) oldResultAd.remove();
+      observeResultStep();
     }catch(e){console.warn("Zusatzinhalte konnten nicht vollständig eingebaut werden",e);}
   }
 
@@ -220,7 +299,9 @@
 
   window.UebergabeCheckAds={
     config:ADS_CONFIG,
+    check24:CHECK24_CONFIG,
     mount:mountExtras,
-    installHomeButtons:installPrivateHomeButtons
+    installHomeButtons:installPrivateHomeButtons,
+    mountCheck24Result
   };
 })();
