@@ -1,4 +1,67 @@
 (function(){
+  const SUPABASE_URL="https://fkirkglhcpltxlcsozmd.supabase.co";
+  const SUPABASE_KEY="sb_publishable_lNeX7Hrtp9-FFl3NVb_Gaw_O-21yXWr";
+  const EVENT_KEY="uebergabecheck_private_completion_id";
+
+  function resetPrivateCompletionId(){
+    try{sessionStorage.removeItem(EVENT_KEY);}catch(e){}
+  }
+
+  function getPrivateCompletionId(){
+    try{
+      let id=sessionStorage.getItem(EVENT_KEY);
+      if(!id){id=crypto.randomUUID();sessionStorage.setItem(EVENT_KEY,id);}
+      return id;
+    }catch(e){return crypto.randomUUID();}
+  }
+
+  function recordPrivateCompletion(){
+    const id=getPrivateCompletionId();
+    fetch(`${SUPABASE_URL}/rest/v1/private_completion_events`,{
+      method:"POST",
+      headers:{
+        apikey:SUPABASE_KEY,
+        Authorization:`Bearer ${SUPABASE_KEY}`,
+        "Content-Type":"application/json",
+        Prefer:"return=minimal"
+      },
+      body:JSON.stringify({id,source:"private"}),
+      keepalive:true
+    }).catch(()=>{});
+  }
+
+  function installPrivateCompletionTracking(){
+    if(typeof window.showSummary==="function"&&!window.showSummary.__ucPrivateTracked){
+      const originalShowSummary=window.showSummary;
+      const wrappedShowSummary=function(...args){
+        const result=originalShowSummary.apply(this,args);
+        recordPrivateCompletion();
+        return result;
+      };
+      wrappedShowSummary.__ucPrivateTracked=true;
+      window.showSummary=wrappedShowSummary;
+    }
+
+    if(typeof window.newTransfer==="function"&&!window.newTransfer.__ucPrivateTracked){
+      const originalNewTransfer=window.newTransfer;
+      const wrappedNewTransfer=function(...args){resetPrivateCompletionId();return originalNewTransfer.apply(this,args);};
+      wrappedNewTransfer.__ucPrivateTracked=true;
+      window.newTransfer=wrappedNewTransfer;
+    }
+
+    const startButton=document.querySelector(".landing-button");
+    if(startButton&&!startButton.dataset.privateCompletionReset){
+      startButton.addEventListener("click",resetPrivateCompletionId);
+      startButton.dataset.privateCompletionReset="1";
+    }
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",installPrivateCompletionTracking,{once:true});
+  else installPrivateCompletionTracking();
+  window.addEventListener("load",installPrivateCompletionTracking,{once:true});
+})();
+
+(function(){
   const ADS_CONFIG={
     enabled:false,
     client:"ca-pub-3457702577665056",
