@@ -31,22 +31,25 @@
 (function(){
   const SUPABASE_URL="https://fkirkglhcpltxlcsozmd.supabase.co";
   const SUPABASE_KEY="sb_publishable_lNeX7Hrtp9-FFl3NVb_Gaw_O-21yXWr";
-  const EVENT_KEY="uebergabecheck_private_completion_id";
+  const COMPLETION_FLAG="uebergabecheck_private_completion_recorded_v2";
+  let recording=false;
 
-  function resetPrivateCompletionId(){
-    try{sessionStorage.removeItem(EVENT_KEY);}catch(e){}
+  function resetPrivateCompletion(){
+    try{sessionStorage.removeItem(COMPLETION_FLAG);}catch(e){}
+    recording=false;
   }
 
-  function getPrivateCompletionId(){
-    try{
-      let id=sessionStorage.getItem(EVENT_KEY);
-      if(!id){id=crypto.randomUUID();sessionStorage.setItem(EVENT_KEY,id);}
-      return id;
-    }catch(e){return crypto.randomUUID();}
+  function alreadyRecorded(){
+    try{return sessionStorage.getItem(COMPLETION_FLAG)==="1";}catch(e){return false;}
+  }
+
+  function markRecorded(){
+    try{sessionStorage.setItem(COMPLETION_FLAG,"1");}catch(e){}
   }
 
   function recordPrivateCompletion(){
-    const id=getPrivateCompletionId();
+    if(recording||alreadyRecorded())return;
+    recording=true;
     fetch(`${SUPABASE_URL}/rest/v1/private_completion_events`,{
       method:"POST",
       headers:{
@@ -55,9 +58,12 @@
         "Content-Type":"application/json",
         Prefer:"return=minimal"
       },
-      body:JSON.stringify({id,source:"private"}),
+      body:JSON.stringify({source:"private"}),
       keepalive:true
-    }).catch(()=>{});
+    }).then(response=>{
+      if(response.ok)markRecorded();
+      recording=false;
+    }).catch(()=>{recording=false;});
   }
 
   function installPrivateCompletionTracking(){
@@ -74,14 +80,14 @@
 
     if(typeof window.newTransfer==="function"&&!window.newTransfer.__ucPrivateTracked){
       const originalNewTransfer=window.newTransfer;
-      const wrappedNewTransfer=function(...args){resetPrivateCompletionId();return originalNewTransfer.apply(this,args);};
+      const wrappedNewTransfer=function(...args){resetPrivateCompletion();return originalNewTransfer.apply(this,args);};
       wrappedNewTransfer.__ucPrivateTracked=true;
       window.newTransfer=wrappedNewTransfer;
     }
 
     const startButton=document.querySelector(".landing-button");
     if(startButton&&!startButton.dataset.privateCompletionReset){
-      startButton.addEventListener("click",resetPrivateCompletionId);
+      startButton.addEventListener("click",resetPrivateCompletion);
       startButton.dataset.privateCompletionReset="1";
     }
   }
