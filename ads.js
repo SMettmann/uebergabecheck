@@ -1,3 +1,33 @@
+/* UEBERGABECHECK_VISITOR_TRACKING_V1 */
+(function(){
+  const SUPABASE_URL="https://fkirkglhcpltxlcsozmd.supabase.co";
+  const SUPABASE_KEY="sb_publishable_lNeX7Hrtp9-FFl3NVb_Gaw_O-21yXWr";
+  const VISIT_FLAG="uebergabecheck_site_visit_recorded_v1";
+
+  function recordSiteVisit(){
+    try{if(sessionStorage.getItem(VISIT_FLAG)==="1")return;}catch(e){}
+    const path=((location.pathname||"/").slice(0,200)||"/");
+    fetch(`${SUPABASE_URL}/rest/v1/site_visit_events`,{
+      method:"POST",
+      headers:{
+        apikey:SUPABASE_KEY,
+        Authorization:`Bearer ${SUPABASE_KEY}`,
+        "Content-Type":"application/json",
+        Prefer:"return=minimal"
+      },
+      body:JSON.stringify({source:"website",path}),
+      keepalive:true
+    }).then(response=>{
+      if(response.ok){
+        try{sessionStorage.setItem(VISIT_FLAG,"1");}catch(e){}
+      }
+    }).catch(()=>{});
+  }
+
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",recordSiteVisit,{once:true});
+  else recordSiteVisit();
+})();
+
 (function(){
   const SUPABASE_URL="https://fkirkglhcpltxlcsozmd.supabase.co";
   const SUPABASE_KEY="sb_publishable_lNeX7Hrtp9-FFl3NVb_Gaw_O-21yXWr";
