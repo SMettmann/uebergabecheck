@@ -1,0 +1,43 @@
+name: Add anonymous visitor tracking
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - tools/add_site_visit_tracking.py
+      - .github/workflows/add-site-visit-tracking.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Patch visitor tracking
+        run: python tools/add_site_visit_tracking.py
+
+      - name: Validate
+        run: |
+          grep -q "UEBERGABECHECK_VISITOR_TRACKING_V1" ads.js
+          grep -q "site_visit_events" ads.js
+          grep -q "Interne Besuchszählung:" index.html
+          grep -q "ads.js?v=4" index.html
+
+      - name: Commit generated files
+        run: |
+          if git diff --quiet -- ads.js index.html; then
+            echo "Visitor tracking already current"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add ads.js index.html
+          git commit -m "Track anonymous website visits"
+          git push
