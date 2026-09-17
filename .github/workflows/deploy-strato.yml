@@ -1,0 +1,56 @@
+name: Deploy Hauptseite to STRATO
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: strato-main-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Validate deploy files
+        run: |
+          test -s index.html
+          test -s ads.css
+          test -s ads.js
+          test -s ads.txt
+          test -s pdf-export.js
+
+      - name: Install SFTP client
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq lftp
+
+      - name: Upload public site files to STRATO
+        env:
+          STRATO_HOST: ${{ secrets.STRATO_HOST }}
+          STRATO_USER: ${{ secrets.STRATO_USER }}
+          STRATO_PASSWORD: ${{ secrets.STRATO_PASSWORD }}
+        run: |
+          lftp <<EOF
+          set cmd:fail-exit yes
+          set net:max-retries 2
+          set net:timeout 20
+          set sftp:auto-confirm yes
+          open -u "$STRATO_USER","$STRATO_PASSWORD" sftp://$STRATO_HOST:22
+          put -O . index.html
+          put -O . ads.css
+          put -O . ads.js
+          put -O . ads.txt
+          put -O . pdf-export.js
+          bye
+          EOF
+
+      - name: Deployment finished
+        run: echo "ÜbergabeCheck Hauptseite wurde erfolgreich zu STRATO übertragen."
