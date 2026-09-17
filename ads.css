@@ -4,18 +4,16 @@
 .uc-ad-slot:empty{display:none}
 
 /* Business-Hinweis auf der Startseite */
-.uc-business-entry{max-width:800px;margin:28px auto 0;padding:24px;border:1px solid #e2b900;border-radius:20px;background:#ffd84d;color:#111;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:24px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
-.uc-business-entry-copy{min-width:0;flex:1}
-.uc-business-entry-badge{display:inline-flex;align-items:center;justify-content:center;margin-bottom:9px;padding:7px 11px;border-radius:999px;background:#111;color:#fff;font-size:12px;line-height:1;font-weight:900;letter-spacing:.06em}
-.uc-business-entry strong{display:block;font-size:23px;line-height:1.15;letter-spacing:-.4px;margin-bottom:7px}
-.uc-business-entry p{margin:0;max-width:620px;color:#2f2a14;font-size:14px;line-height:1.55}
-.uc-business-entry-compare{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
-.uc-business-entry-compare>div{padding:10px 12px;border-radius:11px;background:rgba(255,255,255,.5);border:1px solid rgba(17,17,17,.1)}
-.uc-business-entry-compare b{display:block;margin-bottom:3px;font-size:10px;letter-spacing:.08em}
-.uc-business-entry-compare span{display:block;font-size:12px;line-height:1.4;color:#332d18}
-.uc-business-entry-trial{display:block;margin-top:12px;font-size:13px;line-height:1.4;font-weight:900}
-.uc-business-entry>a{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 17px;border-radius:12px;background:#111;color:#fff;text-decoration:none;font-size:13px;font-weight:850;white-space:nowrap;box-shadow:0 5px 14px rgba(0,0,0,.12);transition:transform .15s ease}
-.uc-business-entry>a:hover{transform:translateY(-1px)}
+.uc-business-entry{max-width:820px;margin:28px auto 0;padding:28px 30px;border:1px solid #ddb300;border-radius:22px;background:linear-gradient(135deg,#ffd84d 0%,#ffe47a 100%);color:#111;text-align:left;display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:34px;box-shadow:0 14px 34px rgba(0,0,0,.09)}
+.uc-business-entry-copy{min-width:0}
+.uc-business-entry-badge{display:inline-flex;align-items:center;justify-content:center;margin-bottom:11px;padding:7px 11px;border-radius:999px;background:#111;color:#fff;font-size:0;line-height:1;font-weight:900;letter-spacing:.06em;box-shadow:0 3px 8px rgba(0,0,0,.1)}
+.uc-business-entry-badge::before{content:"BUSINESS";font-size:11px;letter-spacing:.08em}
+.uc-business-entry strong{display:block;max-width:570px;font-size:26px;line-height:1.12;letter-spacing:-.55px;margin-bottom:9px}
+.uc-business-entry p{margin:0;max-width:590px;color:#302a12;font-size:14.5px;line-height:1.6}
+.uc-business-entry-compare{display:none}
+.uc-business-entry-trial{display:inline-flex;align-items:center;margin-top:16px;padding:8px 11px;border:1px solid rgba(17,17,17,.1);border-radius:10px;background:rgba(255,255,255,.46);font-size:12.5px;line-height:1.35;font-weight:900}
+.uc-business-entry>a{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-height:54px;padding:15px 21px;border-radius:14px;background:#111;color:#fff;text-decoration:none;font-size:14px;font-weight:900;white-space:nowrap;box-shadow:0 8px 18px rgba(0,0,0,.16);transition:transform .15s ease,box-shadow .15s ease}
+.uc-business-entry>a:hover{transform:translateY(-2px);box-shadow:0 11px 24px rgba(0,0,0,.2)}
 
 /* Business-Hinweis direkt nach einer fertigen privaten Übergabe */
 .uc-business-promo{margin:22px 0 0;padding:24px;border:1px solid #2d2d2d;border-radius:20px;background:#111;color:#fff;text-align:left;display:flex;align-items:center;justify-content:space-between;gap:24px;box-shadow:0 10px 26px rgba(0,0,0,.11)}
@@ -32,10 +30,10 @@
 @media(max-width:700px){
   .uc-ad-zone{margin-top:18px}
   .uc-ad-slot{min-height:74px}
-  .uc-business-entry{margin-top:22px;padding:20px;flex-direction:column;align-items:stretch}
-  .uc-business-entry-badge{font-size:12px;padding:7px 11px}
-  .uc-business-entry strong{font-size:20px}
-  .uc-business-entry-compare{grid-template-columns:1fr}
+  .uc-business-entry{margin-top:22px;padding:22px;grid-template-columns:1fr;gap:20px}
+  .uc-business-entry strong{font-size:22px}
+  .uc-business-entry p{font-size:14px}
+  .uc-business-entry-trial{display:flex;width:100%;justify-content:center;text-align:center}
   .uc-business-entry>a{width:100%}
   .uc-business-promo{padding:20px;flex-direction:column;align-items:stretch}
   .uc-business-promo strong{font-size:18px}
