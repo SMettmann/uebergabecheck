@@ -227,18 +227,21 @@
   function createBusinessEntry(){
     const entry=document.createElement("aside");
     entry.className="uc-business-entry no-print";
+    entry.style.columnGap="20px";
     entry.innerHTML=`
       <div class="uc-business-entry-copy">
         <span class="uc-business-entry-badge">BUSINESS · 14 TAGE GRATIS</span>
         <strong>Machst du Wohnungsübergaben regelmäßig?</strong>
-        <p>Dann ist Business für dich: Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>
+        <p><b style="display:block;color:#111;margin-bottom:2px">Dann sparst du dir bei jeder weiteren Übergabe doppelte Arbeit.</b>Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>
         <div class="uc-business-entry-compare">
           <div><b>KOSTENLOS</b><span>Für eine einzelne Wohnungsübergabe.</span></div>
           <div><b>BUSINESS</b><span>Speichern · Historie · Objektverwaltung · Team.</span></div>
         </div>
         <span class="uc-business-entry-trial">✓ 14 Tage kostenlos · keine automatische Verlängerung</span>
       </div>
-      <a href="/business/">14 Tage gratis testen →</a>`;
+      <a href="/business/">14 Tage gratis →</a>`;
+    const heading=entry.querySelector("strong");
+    if(heading) heading.style.maxWidth="none";
     const link=entry.querySelector("a");
     if(link) link.addEventListener("click",()=>{
       try{if(window.umami)window.umami.track("Business Startseite geklickt");}catch(e){}
