@@ -48,5 +48,8 @@ if "Interne Besuchszählung:" not in index:
         raise SystemExit("Privacy insertion point not found")
     index = index.replace(needle, privacy_note + needle, 1)
 
-index = index.replace('ads.js?v=3', 'ads.js?v=4')
+# Cache-Busting für die aktuellen Business-Styles und -Skripte.
+index = index.replace('ads.css?v=3', 'ads.css?v=10')
+index = index.replace('ads.js?v=3', 'ads.js?v=10')
+index = index.replace('ads.js?v=4', 'ads.js?v=10')
 INDEX.write_text(index, encoding="utf-8")
