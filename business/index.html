@@ -5,7 +5,75 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ÜbergabeCheck Business</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#17181b}.wrap{max-width:1100px;margin:0 auto;padding:26px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:18px}.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850}.brand span{font-weight:500;color:#777}.mark{width:34px;height:34px}.mark svg{width:100%;height:100%}.back{color:#555;text-decoration:none;font-size:13px;font-weight:750}.hero{padding:82px 0 54px;text-align:center}.pill{display:inline-block;background:#fff;border:1px solid #ddd;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800;color:#666;margin-bottom:20px}.hero h1{font-size:58px;line-height:1.03;letter-spacing:-2.4px;margin:0 auto 18px;max-width:900px}.hero h1 em{font-style:normal;color:#6b6d72}.lead{max-width:720px;margin:0 auto;color:#666;font-size:17px;line-height:1.65}.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:30px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 19px;border-radius:13px;text-decoration:none;font-weight:800;font-size:14px}.primary{background:#111;color:#fff}.secondary{background:#fff;color:#222;border:1px solid #ddd}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:46px}.card{background:#fff;border:1px solid #e2e3e6;border-radius:18px;padding:20px}.card strong{display:block;font-size:15px;margin-bottom:7px}.card span{display:block;color:#777;font-size:13px;line-height:1.5}.pricing{margin-top:28px;background:#fff;border:1px solid #e2e3e6;border-radius:24px;padding:34px;display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:center;box-shadow:0 8px 28px rgba(0,0,0,.035)}.pricing-kicker{font-size:12px;font-weight:850;letter-spacing:1.4px;color:#777;text-transform:uppercase;margin-bottom:10px}.pricing h2{font-size:31px;letter-spacing:-.8px;margin:0 0 10px}.pricing-copy{margin:0;color:#666;line-height:1.6}.price{font-size:46px;font-weight:900;letter-spacing:-1.8px;margin:20px 0 2px}.price small{font-size:15px;font-weight:700;letter-spacing:0;color:#777}.trial{font-size:14px;font-weight:800;margin-bottom:20px}.pricing-list{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px;margin:0;padding:0;list-style:none}.pricing-list li{font-size:13px;line-height:1.45;color:#444}.pricing-list li::before{content:"✓";font-weight:900;margin-right:8px;color:#111}.pricing-actions{margin-top:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.pricing-note{font-size:12px;color:#777;line-height:1.5}.section{margin-top:26px;background:#111;color:#fff;border-radius:24px;padding:30px;display:flex;align-items:center;justify-content:space-between;gap:24px}.section h2{font-size:27px;margin:0 0 8px}.section p{margin:0;color:#c7c7c7;line-height:1.55;max-width:680px}.section .btn{background:#fff;color:#111;flex:0 0 auto}.footer{text-align:center;color:#888;font-size:12px;margin-top:32px}.footer a{color:inherit;text-decoration:underline;cursor:pointer}.contact{margin-top:26px;background:#fff;border:1px solid #e2e3e6;border-radius:24px;padding:34px}.contact h2{font-size:28px;margin:0 0 8px}.contact>p{color:#666;line-height:1.6;margin:0 0 22px}.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.contact label{display:block;font-size:12px;font-weight:800;margin:0 0 6px}.contact input,.contact textarea{width:100%;padding:13px 14px;border:1px solid #d8d9dd;border-radius:12px;font:inherit;background:#fff}.contact textarea{min-height:140px;resize:vertical}.contact-full{grid-column:1/-1}.contact-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}.contact-status{font-size:13px;color:#666}.contact-status.ok{color:#18743a}.contact-status.error{color:#a11}.contact-hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000}.legal-overlay.hidden{display:none}.legal-modal{background:#fff;width:min(820px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.22);text-align:left}.legal-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}.legal-head h2{margin:0;font-size:24px}.legal-close{border:0;border-radius:10px;padding:9px 13px;background:#ececef;color:#222;font:inherit;font-weight:750;cursor:pointer}.legal-modal h3{margin:24px 0 8px;font-size:16px}.legal-modal p{margin:0 0 14px;color:#555;line-height:1.65}.legal-modal strong{color:#222}@media(max-width:800px){.pricing{grid-template-columns:1fr}.pricing-list{grid-template-columns:1fr 1fr}.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:44px}.section{flex-direction:column;align-items:stretch}.section .btn{width:100%}}@media(max-width:560px){.contact{padding:24px 18px}.contact-grid{grid-template-columns:1fr}.pricing{padding:24px 18px}.pricing-list{grid-template-columns:1fr}.price{font-size:40px}.pricing-actions .btn{width:100%}.top{align-items:flex-start}.hero{padding:55px 0 38px}.hero h1{font-size:36px;letter-spacing:-1.5px}.lead{font-size:15px}.grid{grid-template-columns:1fr}.actions .btn{width:100%}.legal-modal{padding:20px}.legal-head{align-items:flex-start}}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#17181b}
+.wrap{max-width:1120px;margin:0 auto;padding:24px 18px 60px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850;letter-spacing:-.3px}
+.brand span{font-weight:500;color:#777}
+.mark{width:34px;height:34px}.mark svg{width:100%;height:100%}
+.back{color:#555;text-decoration:none;font-size:13px;font-weight:750}
+
+.hero{padding:62px 0 38px;display:grid;grid-template-columns:minmax(0,1.18fr) minmax(320px,.82fr);gap:42px;align-items:center}
+.hero-copy{text-align:left}
+.pill{display:inline-flex;align-items:center;background:#fff;border:1px solid #ddd;border-radius:999px;padding:8px 13px;font-size:11px;font-weight:850;color:#666;margin-bottom:20px;letter-spacing:.05em}
+.hero h1{font-size:56px;line-height:1.03;letter-spacing:-2.3px;margin:0 0 18px;max-width:720px}
+.hero h1 em{font-style:normal;color:#6b6d72}
+.lead{max-width:690px;margin:0;color:#666;font-size:17px;line-height:1.65}
+.actions{display:flex;gap:12px;justify-content:flex-start;flex-wrap:wrap;margin-top:28px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:13px 20px;border-radius:13px;text-decoration:none;font-weight:850;font-size:14px;border:0;cursor:pointer}
+.primary{background:#111;color:#fff;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.secondary{background:#fff;color:#222;border:1px solid #ddd}
+
+.hero-offer{background:linear-gradient(145deg,#ffd84d 0%,#ffe98b 100%);border:1px solid #ddb300;border-radius:26px;padding:28px;box-shadow:0 16px 40px rgba(0,0,0,.10)}
+.hero-offer-label{display:inline-flex;background:#111;color:#fff;border-radius:999px;padding:7px 11px;font-size:10px;font-weight:900;letter-spacing:.09em;margin-bottom:17px}
+.hero-price{font-size:48px;line-height:1;font-weight:950;letter-spacing:-1.8px;margin:0}
+.hero-price small{font-size:15px;font-weight:800;letter-spacing:0;color:#514916}
+.hero-price-copy{font-size:13px;line-height:1.5;color:#4c4419;margin:9px 0 18px;font-weight:700}
+.hero-offer ul{list-style:none;margin:0;padding:0;display:grid;gap:9px}
+.hero-offer li{font-size:13px;line-height:1.4;font-weight:750}
+.hero-offer li::before{content:"✓";margin-right:8px;font-weight:950}
+.hero-trial{margin-top:18px;padding:12px 13px;background:rgba(255,255,255,.58);border:1px solid rgba(17,17,17,.12);border-radius:12px;font-size:12.5px;line-height:1.45;font-weight:850;text-align:center}
+.hero-offer .btn{width:100%;margin-top:12px}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px}
+.card{background:#fff;border:1px solid #e2e3e6;border-radius:18px;padding:21px;box-shadow:0 4px 16px rgba(0,0,0,.025)}
+.card strong{display:block;font-size:15px;margin-bottom:7px}.card span{display:block;color:#777;font-size:13px;line-height:1.5}
+
+.pricing{margin-top:28px;background:#111;color:#fff;border-radius:26px;padding:36px;display:grid;grid-template-columns:.9fr 1.1fr;gap:42px;align-items:center;box-shadow:0 16px 42px rgba(0,0,0,.12)}
+.pricing-kicker{font-size:11px;font-weight:900;letter-spacing:1.5px;color:#ffd84d;text-transform:uppercase;margin-bottom:10px}
+.pricing h2{font-size:32px;letter-spacing:-.9px;margin:0 0 10px}
+.pricing-copy{margin:0;color:#c9c9cc;line-height:1.6}
+.price{font-size:47px;font-weight:950;letter-spacing:-1.8px;margin:20px 0 5px;color:#fff}
+.price small{font-size:15px;font-weight:750;letter-spacing:0;color:#c9c9cc}
+.price-sub{font-size:12px;color:#ffd84d;font-weight:850;margin-bottom:13px}
+.trial{font-size:13px;font-weight:800;color:#fff;margin-bottom:20px;line-height:1.5}
+.pricing-list-wrap{background:#1c1c1e;border:1px solid #303033;border-radius:19px;padding:22px}
+.pricing-list{display:grid;grid-template-columns:1fr 1fr;gap:11px 18px;margin:0;padding:0;list-style:none}
+.pricing-list li{font-size:13px;line-height:1.45;color:#efeff1}
+.pricing-list li::before{content:"✓";font-weight:950;margin-right:8px;color:#ffd84d}
+.pricing-actions{margin-top:22px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.pricing .primary{background:#ffd84d;color:#111;box-shadow:none}
+.pricing-note{font-size:12px;color:#a9a9ad;line-height:1.5}
+
+.section{margin-top:26px;background:#fff;border:1px solid #e2e3e6;border-radius:22px;padding:28px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.section h2{font-size:25px;margin:0 0 7px}.section p{margin:0;color:#666;line-height:1.55;max-width:690px}.section .btn{flex:0 0 auto}
+.contact{margin-top:26px;background:#fff;border:1px solid #e2e3e6;border-radius:24px;padding:34px}
+.contact h2{font-size:28px;margin:0 0 8px}.contact>p{color:#666;line-height:1.6;margin:0 0 22px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.contact label{display:block;font-size:12px;font-weight:800;margin:0 0 6px}
+.contact input,.contact textarea{width:100%;padding:13px 14px;border:1px solid #d8d9dd;border-radius:12px;font:inherit;background:#fff}.contact textarea{min-height:140px;resize:vertical}.contact-full{grid-column:1/-1}
+.contact-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:16px}.contact-status{font-size:13px;color:#666}.contact-status.ok{color:#18743a}.contact-status.error{color:#a11}.contact-hp{position:absolute!important;left:-9999px!important;width:1px!important;height:1px!important;overflow:hidden!important}
+.footer{text-align:center;color:#888;font-size:12px;margin-top:32px}.footer a{color:inherit;text-decoration:underline;cursor:pointer}
+.legal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.48);display:flex;align-items:center;justify-content:center;padding:18px;z-index:1000}.legal-overlay.hidden{display:none}.legal-modal{background:#fff;width:min(820px,100%);max-height:90vh;overflow:auto;border-radius:20px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.22);text-align:left}.legal-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:14px}.legal-head h2{margin:0;font-size:24px}.legal-close{border:0;border-radius:10px;padding:9px 13px;background:#ececef;color:#222;font:inherit;font-weight:750;cursor:pointer}.legal-modal h3{margin:24px 0 8px;font-size:16px}.legal-modal p{margin:0 0 14px;color:#555;line-height:1.65}.legal-modal strong{color:#222}
+
+@media(max-width:860px){
+  .hero{grid-template-columns:1fr;padding-top:48px}.hero-copy{text-align:center}.lead{margin:0 auto}.actions{justify-content:center}.hero-offer{max-width:560px;width:100%;margin:0 auto}.grid{grid-template-columns:1fr 1fr}.pricing{grid-template-columns:1fr}.section{flex-direction:column;align-items:stretch}.section .btn{width:100%}
+}
+@media(max-width:560px){
+  .wrap{padding:18px 14px 44px}.top{align-items:flex-start}.brand{font-size:18px}.mark{width:31px;height:31px}.back{font-size:12px}
+  .hero{padding:42px 0 26px;gap:26px}.hero h1{font-size:38px;letter-spacing:-1.5px}.lead{font-size:15px}.actions .btn{width:100%}.hero-offer{padding:22px}.hero-price{font-size:42px}
+  .grid{grid-template-columns:1fr;margin-top:12px}.pricing{padding:26px 20px}.pricing-list{grid-template-columns:1fr}.price{font-size:42px}.pricing-actions .btn{width:100%}.section{padding:24px 20px}.contact{padding:24px 18px}.contact-grid{grid-template-columns:1fr}.legal-modal{padding:20px}.legal-head{align-items:flex-start}
+}
 </style>
 </head>
 <body>
@@ -16,21 +84,36 @@
   </div>
 
   <main class="hero">
-    <div class="pill">AUSSCHLIESSLICH FÜR UNTERNEHMER · § 14 BGB</div>
-    <h1>Übergaben professionell verwalten.<br><em>Alles an einem Ort.</em></h1>
-    <p class="lead">Objekte, Wohnungen, Übergaben und Mängel zentral verwalten. ÜbergabeCheck Business verbindet die digitale Dokumentation mit einer übersichtlichen Verwaltungsoberfläche und richtet sich ausschließlich an Unternehmer im Sinne des § 14 BGB.</p>
-    <div class="actions">
-      <a class="btn primary" href="app.html">Business öffnen →</a>
-      <a class="btn secondary" href="#kontakt">Kontakt aufnehmen</a>
+    <div class="hero-copy">
+      <div class="pill">BUSINESS · FÜR UNTERNEHMEN</div>
+      <h1>Übergaben professionell verwalten.<br><em>Alles an einem Ort.</em></h1>
+      <p class="lead">Objekte, Wohnungen, Übergaben und Mängel zentral verwalten. ÜbergabeCheck Business verbindet die digitale Dokumentation mit einer übersichtlichen Verwaltungsoberfläche.</p>
+      <div class="actions">
+        <a class="btn primary" href="app.html">14 Tage kostenlos testen →</a>
+        <a class="btn secondary" href="#preis">Alle Leistungen ansehen</a>
+      </div>
     </div>
 
-    <div class="grid">
-      <div class="card"><strong>Objekte verwalten</strong><span>Gebäude und Liegenschaften übersichtlich anlegen und organisieren.</span></div>
-      <div class="card"><strong>Wohnungen zuordnen</strong><span>Einheiten direkt den passenden Objekten zuweisen.</span></div>
-      <div class="card"><strong>Übergaben speichern</strong><span>Vorgänge dauerhaft je Wohnung dokumentieren und wieder öffnen.</span></div>
-      <div class="card"><strong>Mängel im Blick behalten</strong><span>Festgestellte Mängel zentral anzeigen und weiterverfolgen.</span></div>
-    </div>
+    <aside class="hero-offer">
+      <div class="hero-offer-label">KLARER FESTPREIS</div>
+      <div class="hero-price">29,99 € <small>/ Monat</small></div>
+      <div class="hero-price-copy">Unabhängig davon, wie viele Übergaben du durchführst.</div>
+      <ul>
+        <li>Unbegrenzte Objekte &amp; Wohnungen</li>
+        <li>Inhaber + bis zu 10 Mitarbeiter inklusive</li>
+        <li>Gespeicherte Übergaben jederzeit abrufbar</li>
+      </ul>
+      <div class="hero-trial">14 Tage kostenlos · keine automatische Verlängerung</div>
+      <a class="btn primary" href="app.html">Jetzt kostenlos testen →</a>
+    </aside>
   </main>
+
+  <div class="grid">
+    <div class="card"><strong>Objekte verwalten</strong><span>Gebäude und Liegenschaften übersichtlich anlegen und organisieren.</span></div>
+    <div class="card"><strong>Wohnungen zuordnen</strong><span>Einheiten direkt den passenden Objekten zuweisen.</span></div>
+    <div class="card"><strong>Übergaben speichern</strong><span>Vorgänge dauerhaft je Wohnung dokumentieren und wieder öffnen.</span></div>
+    <div class="card"><strong>Mängel im Blick behalten</strong><span>Festgestellte Mängel zentral anzeigen und weiterverfolgen.</span></div>
+  </div>
 
   <section class="pricing" id="preis">
     <div>
@@ -38,28 +121,31 @@
       <h2>ÜbergabeCheck Business</h2>
       <p class="pricing-copy">Für Hausverwaltungen, Vermieter und Unternehmen, die Wohnungsübergaben dauerhaft digital organisieren möchten.</p>
       <div class="price">29,99 € <small>/ Monat</small></div>
-      <div class="trial">14 Tage kostenlos testen · Inhaber + bis zu 10 Mitarbeiter inklusive · keine automatische Umwandlung</div>
+      <div class="price-sub">Fester Preis – unabhängig von der Anzahl der Übergaben.</div>
+      <div class="trial">14 Tage kostenlos testen · keine automatische Verlängerung</div>
       <div class="pricing-actions">
         <a class="btn primary" href="app.html">14 Tage kostenlos testen →</a>
-        <div class="pricing-note">Danach nur bei aktiver Buchung 29,99 € / Monat<br>Inhaber + bis zu 10 Mitarbeiter inklusive · jederzeit zum Ende des Abrechnungszeitraums kündbar</div>
+        <div class="pricing-note">Danach nur bei aktiver Buchung 29,99 € / Monat.<br>Jederzeit zum Ende des Abrechnungszeitraums kündbar.</div>
       </div>
     </div>
-    <ul class="pricing-list">
-      <li>Unbegrenzte Objekte &amp; Wohnungen</li>
-      <li>Digitale Übergabeprotokolle</li>
-      <li>Fotos &amp; Mängeldokumentation</li>
-      <li>Digitale Unterschriften</li>
-      <li>PDF-Export &amp; E-Mail-Versand</li>
-      <li>Eigener Firmenbriefkopf</li>
-      <li>Teamverwaltung mit Inhaber-, Admin- &amp; Mitarbeiterrollen</li>
-      <li>Bis zu 10 Mitarbeiter zusätzlich zum Inhaber</li>
-      <li>Gespeicherte vergangene Übergaben</li>
-    </ul>
+    <div class="pricing-list-wrap">
+      <ul class="pricing-list">
+        <li>Unbegrenzte Objekte &amp; Wohnungen</li>
+        <li>Digitale Übergabeprotokolle</li>
+        <li>Fotos &amp; Mängeldokumentation</li>
+        <li>Digitale Unterschriften</li>
+        <li>PDF-Export &amp; E-Mail-Versand</li>
+        <li>Eigener Firmenbriefkopf</li>
+        <li>Teamverwaltung mit Rollen</li>
+        <li>Inhaber + bis zu 10 Mitarbeiter</li>
+        <li>Gespeicherte vergangene Übergaben</li>
+      </ul>
+    </div>
   </section>
 
   <section class="section">
-    <div><h2>Die kostenlose Version bleibt kostenlos.</h2><p>Für einzelne private Wohnungsübergaben kannst du weiterhin die kostenlose Version nutzen. Business ist für regelmäßige und zentrale Verwaltung gedacht.</p></div>
-    <a class="btn" href="../">Kostenlose Version öffnen →</a>
+    <div><h2>Die kostenlose Version bleibt kostenlos.</h2><p>Für einzelne private Wohnungsübergaben kannst du weiterhin die kostenlose Version nutzen. Business ist für regelmäßige Übergaben und die zentrale Verwaltung gedacht.</p></div>
+    <a class="btn secondary" href="../">Kostenlose Version öffnen →</a>
   </section>
 
   <section class="contact" id="kontakt">
@@ -74,7 +160,7 @@
         <div class="contact-hp" aria-hidden="true"><label for="contactWebsite">Website</label><input id="contactWebsite" name="website" tabindex="-1" autocomplete="off"></div>
       </div>
       <div class="contact-actions"><button class="btn primary" id="contactSubmit" type="submit">Nachricht senden →</button><span class="contact-status" id="contactStatus" aria-live="polite"></span></div>
-      <p class="pricing-note" style="margin-top:12px">Mit dem Absenden werden deine Angaben ausschließlich zur Bearbeitung deiner Anfrage verarbeitet. Details findest du in der <a href="app.html#datenschutz">Datenschutzerklärung</a>.</p>
+      <p class="pricing-note" style="margin-top:12px;color:#777">Mit dem Absenden werden deine Angaben ausschließlich zur Bearbeitung deiner Anfrage verarbeitet. Details findest du in der <a href="app.html#datenschutz">Datenschutzerklärung</a>.</p>
     </form>
   </section>
 
