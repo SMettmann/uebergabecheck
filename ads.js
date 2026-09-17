@@ -205,11 +205,22 @@
     promo.className="uc-business-promo no-print";
     promo.innerHTML=`
       <div class="uc-business-promo-copy">
-        <span class="uc-business-promo-kicker">ÜbergabeCheck Business</span>
-        <strong>Übergaben regelmäßig durchführen?</strong>
-        <p>Objekte, Wohnungen, Übergaben und Mängel zentral verwalten – für Vermieter, Hausverwaltungen und Unternehmen.</p>
+        <span class="uc-business-promo-kicker">Gerade eine Übergabe abgeschlossen?</span>
+        <strong>Machst du das regelmäßig? Dann musst du beim nächsten Mal nicht wieder von vorn anfangen.</strong>
+        <p>Mit ÜbergabeCheck Business bleiben Objekte, Wohnungen, Übergaben, Fotos und Mängel gespeichert und jederzeit wieder verfügbar.</p>
+        <ul class="uc-business-promo-benefits">
+          <li>Wohnungen einmal anlegen</li>
+          <li>Vergangene Übergaben wieder öffnen</li>
+          <li>Mängel &amp; Fotos dauerhaft wiederfinden</li>
+          <li>Gemeinsam im Team arbeiten</li>
+        </ul>
+        <span class="uc-business-promo-trial">14 Tage kostenlos testen · keine automatische Verlängerung</span>
       </div>
-      <a href="/business/">Business ansehen →</a>`;
+      <a href="/business/">Business 14 Tage gratis testen →</a>`;
+    const link=promo.querySelector("a");
+    if(link) link.addEventListener("click",()=>{
+      try{if(window.umami)window.umami.track("Business nach Übergabe geklickt");}catch(e){}
+    });
     return promo;
   }
 
@@ -218,11 +229,20 @@
     entry.className="uc-business-entry no-print";
     entry.innerHTML=`
       <div class="uc-business-entry-copy">
-        <span class="uc-business-entry-badge">BUSINESS</span>
-        <strong>ÜbergabeCheck für Unternehmen</strong>
-        <p>Mehrere Objekte, Wohnungen, Übergaben und Mängel zentral verwalten – mit der Business-Version von ÜbergabeCheck.</p>
+        <span class="uc-business-entry-badge">BUSINESS · 14 TAGE GRATIS</span>
+        <strong>Machst du Wohnungsübergaben regelmäßig?</strong>
+        <p>Dann ist Business für dich: Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>
+        <div class="uc-business-entry-compare">
+          <div><b>KOSTENLOS</b><span>Für eine einzelne Wohnungsübergabe.</span></div>
+          <div><b>BUSINESS</b><span>Speichern · Historie · Objektverwaltung · Team.</span></div>
+        </div>
+        <span class="uc-business-entry-trial">✓ 14 Tage kostenlos · keine automatische Verlängerung</span>
       </div>
-      <a href="/business/">Zur Business-Version →</a>`;
+      <a href="/business/">14 Tage gratis testen →</a>`;
+    const link=entry.querySelector("a");
+    if(link) link.addEventListener("click",()=>{
+      try{if(window.umami)window.umami.track("Business Startseite geklickt");}catch(e){}
+    });
     return entry;
   }
 
@@ -338,14 +358,16 @@
     const actions=step5.querySelector(".actions.no-print");
     if(!actions) return;
 
+    let business=document.querySelector(".uc-business-promo");
+    if(!business){
+      business=createBusinessPromo();
+      actions.insertAdjacentElement("afterend",business);
+    }
+
     let partner=document.querySelector('[data-partner="check24"][data-partner-position="result"]');
     if(!partner){
       partner=createCheck24Promo("result");
-      actions.insertAdjacentElement("afterend",partner);
-    }
-
-    if(!document.querySelector(".uc-business-promo")){
-      partner.insertAdjacentElement("afterend",createBusinessPromo());
+      business.insertAdjacentElement("afterend",partner);
     }
   }
 
