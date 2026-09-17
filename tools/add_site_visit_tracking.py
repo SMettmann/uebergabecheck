@@ -38,7 +38,28 @@ if MARKER not in ads:
 
 '''
     ads = tracking + ads
-    ADS.write_text(ads, encoding="utf-8")
+
+# Keep the Business card focused on the concrete time-saving benefit.
+ads = ads.replace(
+    '        <p>Dann ist Business für dich: Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>',
+    '        <p><b style="display:block;color:#111;margin-bottom:2px">Dann sparst du dir bei jeder weiteren Übergabe doppelte Arbeit.</b>Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>'
+)
+ads = ads.replace(
+    '      <a href="/business/">14 Tage gratis testen →</a>`;',
+    '      <a href="/business/">14 Tage gratis →</a>`;',
+    1
+)
+ads = ads.replace(
+    '    entry.className="uc-business-entry no-print";',
+    '    entry.className="uc-business-entry no-print";\n    entry.style.columnGap="20px";',
+    1
+)
+ads = ads.replace(
+    '    const link=entry.querySelector("a");',
+    '    const heading=entry.querySelector("strong");\n    if(heading) heading.style.maxWidth="none";\n    const link=entry.querySelector("a");',
+    1
+)
+ADS.write_text(ads, encoding="utf-8")
 
 index = INDEX.read_text(encoding="utf-8")
 privacy_note = '<p><strong>Interne Besuchszählung:</strong> Zusätzlich zählt ÜbergabeCheck anonyme Website-Besuche über die technische Infrastruktur von Supabase. Dabei werden keine Inhalte des Übergabeprotokolls, Namen, Adressen, Fotos oder Unterschriften gespeichert. Zur Vermeidung mehrfacher Zählungen beim Neuladen wird für die Dauer der Browser-Sitzung lediglich ein technischer Session-Marker im Browser gesetzt. In der Besuchsstatistik werden nur Zeitpunkt und aufgerufener Pfad gespeichert.</p>'
@@ -48,8 +69,7 @@ if "Interne Besuchszählung:" not in index:
         raise SystemExit("Privacy insertion point not found")
     index = index.replace(needle, privacy_note + needle, 1)
 
-# Cache-Busting für die aktuellen Business-Styles und -Skripte.
-index = index.replace('ads.css?v=3', 'ads.css?v=10')
-index = index.replace('ads.js?v=3', 'ads.js?v=10')
-index = index.replace('ads.js?v=4', 'ads.js?v=10')
+index = index.replace('ads.js?v=3', 'ads.js?v=11')
+index = index.replace('ads.js?v=4', 'ads.js?v=11')
+index = index.replace('ads.js?v=10', 'ads.js?v=11')
 INDEX.write_text(index, encoding="utf-8")
