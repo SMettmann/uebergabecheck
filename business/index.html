@@ -8,12 +8,12 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f5f6f8;color:#17181b}
 .wrap{max-width:1120px;margin:0 auto;padding:24px 18px 60px}
-.top{display:flex;justify-content:space-between;align-items:center;gap:18px}
+.top{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:18px}
 .brand{display:flex;align-items:center;gap:10px;font-size:21px;font-weight:850;letter-spacing:-.3px}
 .brand span{font-weight:500;color:#777}
 .mark{width:34px;height:34px}.mark svg{width:100%;height:100%}
-.top-actions{display:flex;align-items:center;gap:10px}
-.back{color:#555;text-decoration:none;font-size:13px;font-weight:750}
+.back-home{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:9px 13px;border:1px solid #d7d8dc;border-radius:11px;background:#fff;color:#454950;text-decoration:none;font-size:13px;font-weight:800;white-space:nowrap}
+.back-home:hover{border-color:#bfc1c7;background:#fafafa;color:#17181b}
 .customer-login{display:inline-flex;align-items:center;justify-content:center;min-height:38px;padding:9px 14px;border:1px solid #d7d8dc;border-radius:11px;background:#fff;color:#17181b;text-decoration:none;font-size:13px;font-weight:850;box-shadow:0 3px 10px rgba(0,0,0,.035)}
 .customer-login:hover{border-color:#bfc1c7;background:#fafafa}
 
@@ -73,7 +73,7 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Sego
   .hero{grid-template-columns:1fr;padding-top:48px}.hero-copy{text-align:center}.lead{margin:0 auto}.actions{justify-content:center}.hero-offer{max-width:560px;width:100%;margin:0 auto}.grid{grid-template-columns:1fr 1fr}.pricing{grid-template-columns:1fr}.section{flex-direction:column;align-items:stretch}.section .btn{width:100%}
 }
 @media(max-width:560px){
-  .wrap{padding:18px 14px 44px}.top{align-items:flex-start}.brand{font-size:18px}.mark{width:31px;height:31px}.top-actions{gap:7px;flex-wrap:wrap;justify-content:flex-end}.back{font-size:12px}.customer-login{min-height:34px;padding:7px 10px;font-size:12px}
+  .wrap{padding:18px 14px 44px}.top{grid-template-columns:1fr auto;align-items:center;gap:10px}.brand{grid-column:1/-1;grid-row:2;font-size:18px;margin-top:5px}.mark{width:31px;height:31px}.back-home{min-height:34px;padding:7px 10px;font-size:12px}.customer-login{min-height:34px;padding:7px 10px;font-size:12px}
   .hero{padding:42px 0 26px;gap:26px}.hero h1{font-size:38px;letter-spacing:-1.5px}.lead{font-size:15px}.actions .btn{width:100%}.hero-offer{padding:22px}.hero-price{font-size:42px}
   .grid{grid-template-columns:1fr;margin-top:12px}.pricing{padding:26px 20px}.pricing-list{grid-template-columns:1fr}.price{font-size:42px}.pricing-actions .btn{width:100%}.section{padding:24px 20px}.contact{padding:24px 18px}.contact-grid{grid-template-columns:1fr}.legal-modal{padding:20px}.legal-head{align-items:flex-start}
 }
@@ -82,11 +82,9 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Sego
 <body>
 <div class="wrap">
   <div class="top">
+    <a class="back-home" href="../">← Zurück zu ÜbergabeCheck</a>
     <div class="brand"><div class="mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 28.5 32 9l24 19.5V55H8V28.5Z" stroke="#0D1B2A" stroke-width="5" stroke-linejoin="round"/><path d="M40 9h8v10" stroke="#0D1B2A" stroke-width="5" stroke-linecap="round"/><path d="m22 38 7 7 15-18" stroke="#22C55E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div>Übergabe<span>Check</span> Business</div></div>
-    <div class="top-actions">
-      <a class="back" href="../">← Privatversion</a>
-      <a class="customer-login" href="app.html">Kunden-Login →</a>
-    </div>
+    <a class="customer-login" href="app.html">Kunden-Login →</a>
   </div>
 
   <main class="hero">
