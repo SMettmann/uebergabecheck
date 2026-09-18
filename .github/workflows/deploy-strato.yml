@@ -1,6 +1,15 @@
 name: Deploy Hauptseite to STRATO
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'ads.css'
+      - 'ads.js'
+      - 'ads.txt'
+      - 'pdf-export.js'
+      - '.github/workflows/deploy-strato.yml'
   workflow_dispatch:
 
 permissions:
