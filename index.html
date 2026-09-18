@@ -127,10 +127,20 @@
   .landing-pill{display:inline-block;background:#fff;border:1px solid #ddd;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:750;color:#666;margin-bottom:22px}
   .landing h1{font-size:58px;line-height:1.03;letter-spacing:-2.5px;margin:0 0 18px;font-weight:850}
   .landing h1 em{font-style:normal;color:#6b6d72}
-  .landing-lead{max-width:650px;margin:0 auto;color:#666;font-size:17px;line-height:1.65}
-  .landing-button{margin-top:28px;background:#111;color:#fff;border:0;border-radius:14px;padding:16px 23px;font-weight:800;font-size:16px;cursor:pointer;box-shadow:0 8px 22px rgba(0,0,0,.14)}
-  .landing-button span{margin-left:8px;font-size:19px}
-  .landing-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:60px;text-align:left}
+  .landing-lead{max-width:690px;margin:0 auto;color:#666;font-size:17px;line-height:1.65}
+  .landing-audience-note{margin:24px auto 0;font-size:13px;font-weight:800;color:#555;letter-spacing:.01em}
+  .landing-choice{display:grid;grid-template-columns:repeat(2,minmax(0,280px));gap:12px;justify-content:center;margin-top:12px}
+  .landing-choice-card{min-height:96px;padding:17px 18px;border-radius:16px;text-align:left;display:flex;flex-direction:column;justify-content:center;text-decoration:none;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
+  .landing-choice-card small{display:block;margin-bottom:5px;font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
+  .landing-choice-card strong{display:block;font-size:15px;line-height:1.25;margin-bottom:4px}
+  .landing-choice-card span{display:block;font-size:12px;line-height:1.4}
+  .landing-button{margin:0;background:#fff;color:#222;border:1px solid #d9dade;box-shadow:0 5px 16px rgba(0,0,0,.055);font:inherit}
+  .landing-button small{color:#777}.landing-button span{color:#777}
+  .landing-button:hover{transform:translateY(-1px);border-color:#bfc1c7;box-shadow:0 8px 20px rgba(0,0,0,.08)}
+  .landing-business-button{background:#111;color:#fff;border:1px solid #111;box-shadow:0 8px 22px rgba(0,0,0,.14)}
+  .landing-business-button small{color:#9ee3ad}.landing-business-button span{color:#d4d4d7}
+  .landing-business-button:hover{transform:translateY(-1px);box-shadow:0 11px 26px rgba(0,0,0,.18)}
+  .landing-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px;text-align:left}
   .landing-features>div{background:#fff;border:1px solid #e2e3e6;border-radius:18px;padding:20px}
   .feature-icon{font-size:23px;margin-bottom:12px}
   .landing-features strong{display:block;font-size:14px;margin-bottom:6px}
@@ -139,6 +149,9 @@
     .landing{min-height:calc(100vh - 50px);padding:25px 0 45px}
     .landing h1{font-size:40px;letter-spacing:-1.7px}
     .landing-lead{font-size:15px}
+    .landing-audience-note{margin-top:20px}
+    .landing-choice{grid-template-columns:1fr}
+    .landing-choice-card{min-height:88px}
     .landing-features{grid-template-columns:1fr;margin-top:38px}
   }
   .sig-wrap{margin-top:12px}
@@ -178,9 +191,9 @@
   }
 
 </style>
-<link rel="stylesheet" href="ads.css?v=12">
+<link rel="stylesheet" href="ads.css?v=14">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="a4c18987-08e8-480c-a3e7-a19b50232683" data-domains="smettmann.github.io"></script>
-<script defer src="ads.js?v=13"></script>
+<script defer src="ads.js?v=15"></script>
 </head>
 <body>
 <div class="app">
@@ -193,7 +206,19 @@
       <div class="landing-pill">Einfach. Dokumentiert. Fertig.</div>
       <h1>Deine Wohnungsübergabe.<br><em>Einfach dokumentiert.</em></h1>
       <p class="landing-lead">Räume, Mängel, Fotos, Zählerstände und Schlüssel – Schritt für Schritt festhalten und am Ende ein übersichtliches Übergabeprotokoll erstellen.</p>
-      <button class="landing-button" onclick="startApp()">Übergabe erstellen <span>→</span></button>
+      <div class="landing-audience-note">Wie möchtest du ÜbergabeCheck nutzen?</div>
+      <div class="landing-choice">
+        <button class="landing-choice-card landing-button" onclick="startApp()">
+          <small>Privat</small>
+          <strong>Einzelne Übergabe dokumentieren →</strong>
+          <span>Kostenfrei und direkt im Browser starten.</span>
+        </button>
+        <a class="landing-choice-card landing-business-button" href="/business/">
+          <small>Für Unternehmen</small>
+          <strong>ÜbergabeCheck Business →</strong>
+          <span>Für Verwaltungen, Vermieter und Teams mit regelmäßigen Übergaben.</span>
+        </a>
+      </div>
       <div class="landing-features">
         <div><div class="feature-icon">⌾</div><strong>Alles dokumentieren</strong><span>Räume und Zustand Schritt für Schritt erfassen.</span></div>
         <div><div class="feature-icon">▣</div><strong>Fotos zuordnen</strong><span>Mängel direkt mit Fotos festhalten.</span></div>
