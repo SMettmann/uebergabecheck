@@ -105,7 +105,10 @@
   }
   .landing{min-height:calc(100vh - 88px);display:flex;align-items:center;justify-content:center;padding:40px 0 70px}
   .landing-inner{text-align:center;max-width:820px}
+  .landing-top{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:22px}
   .brand-lockup{display:flex;align-items:center;gap:10px}
+  .business-login-link{display:inline-flex;align-items:center;justify-content:center;min-height:36px;padding:8px 12px;border:1px solid #d9dade;border-radius:10px;background:#fff;color:#3f4349;text-decoration:none;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 3px 10px rgba(0,0,0,.035)}
+  .business-login-link:hover{border-color:#bfc1c7;color:#111;background:#fafafa}
   .brand-mark{width:34px;height:34px;flex:0 0 34px}
   .brand-mark svg{width:100%;height:100%;display:block}
   .site-footer{margin:18px 0 0;text-align:center;font-size:13px;color:#777}
@@ -122,7 +125,7 @@
   .impressum-close{background:#ececef;color:#222;padding:9px 13px}
   .impressum-modal p{line-height:1.6;color:#555}
   .impressum-modal strong{color:#222}
-  .landing-logo{font-size:20px;font-weight:850;letter-spacing:-.5px;margin-bottom:22px}
+  .landing-logo{font-size:20px;font-weight:850;letter-spacing:-.5px;margin-bottom:0}
   .landing-logo span{font-weight:500;color:#777}
   .landing-pill{display:inline-block;background:#fff;border:1px solid #ddd;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:750;color:#666;margin-bottom:22px}
   .landing h1{font-size:58px;line-height:1.03;letter-spacing:-2.5px;margin:0 0 18px;font-weight:850}
@@ -147,6 +150,8 @@
   .landing-features span{display:block;color:#777;font-size:13px;line-height:1.5}
   @media(max-width:700px){
     .landing{min-height:calc(100vh - 50px);padding:25px 0 45px}
+    .landing-top{align-items:center;gap:10px;margin-bottom:20px}
+    .business-login-link{min-height:34px;padding:7px 9px;font-size:11.5px}
     .landing h1{font-size:40px;letter-spacing:-1.7px}
     .landing-lead{font-size:15px}
     .landing-audience-note{margin-top:20px}
@@ -199,9 +204,12 @@
 <div class="app">
   <section class="landing" id="landing">
     <div class="landing-inner">
-      <div class="landing-logo brand-lockup">
-        <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 28.5 32 9l24 19.5V55H8V28.5Z" stroke="#0D1B2A" stroke-width="5" stroke-linejoin="round"/><path d="M40 9h8v10" stroke="#0D1B2A" stroke-width="5" stroke-linecap="round"/><path d="m22 38 7 7 15-18" stroke="#22C55E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div>Übergabe<span>Check</span></div>
+      <div class="landing-top">
+        <div class="landing-logo brand-lockup">
+          <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 28.5 32 9l24 19.5V55H8V28.5Z" stroke="#0D1B2A" stroke-width="5" stroke-linejoin="round"/><path d="M40 9h8v10" stroke="#0D1B2A" stroke-width="5" stroke-linecap="round"/><path d="m22 38 7 7 15-18" stroke="#22C55E" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div>Übergabe<span>Check</span></div>
+        </div>
+        <a class="business-login-link" href="/business/app.html">Business-Login →</a>
       </div>
       <div class="landing-pill">Einfach. Dokumentiert. Fertig.</div>
       <h1>Deine Wohnungsübergabe.<br><em>Einfach dokumentiert.</em></h1>
