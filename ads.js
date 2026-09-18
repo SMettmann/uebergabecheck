@@ -411,8 +411,19 @@
 
     try{
       const landingButton=document.querySelector(".landing-button");
-      if(landingButton&&!document.querySelector(".uc-business-entry")){
-        landingButton.insertAdjacentElement("afterend",createBusinessEntry());
+      const landingChoice=document.querySelector(".landing-choice");
+      const landingBusinessButton=document.querySelector(".landing-business-button");
+
+      if(landingBusinessButton&&!landingBusinessButton.dataset.businessTracked){
+        landingBusinessButton.addEventListener("click",()=>{
+          recordBusinessCtaClick("landing");
+          try{if(window.umami)window.umami.track("Business Hero geklickt");}catch(e){}
+        });
+        landingBusinessButton.dataset.businessTracked="1";
+      }
+
+      if(landingChoice&&!document.querySelector(".uc-business-entry")){
+        landingChoice.insertAdjacentElement("afterend",createBusinessEntry());
       }
 
       const features=document.querySelector(".landing-features");
