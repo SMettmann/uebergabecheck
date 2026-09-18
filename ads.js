@@ -105,6 +105,23 @@
     resultSlot:""
   };
 
+  const TRACKING_SUPABASE_URL="https://fkirkglhcpltxlcsozmd.supabase.co";
+  const TRACKING_SUPABASE_KEY="sb_publishable_lNeX7Hrtp9-FFl3NVb_Gaw_O-21yXWr";
+
+  function recordBusinessCtaClick(placement){
+    fetch(`${TRACKING_SUPABASE_URL}/rest/v1/business_cta_click_events`,{
+      method:"POST",
+      headers:{
+        apikey:TRACKING_SUPABASE_KEY,
+        Authorization:`Bearer ${TRACKING_SUPABASE_KEY}`,
+        "Content-Type":"application/json",
+        Prefer:"return=minimal"
+      },
+      body:JSON.stringify({placement}),
+      keepalive:true
+    }).catch(()=>{});
+  }
+
   const CHECK24_CONFIG={
     clickUrl:"https://www.awin1.com/cread.php?s=2126222&v=9364&q=332953&r=3068167",
     imageUrl:"https://www.awin1.com/cshow.php?s=2126222&v=9364&q=332953&r=3068167",
@@ -219,6 +236,7 @@
       <a href="/business/">Business 14 Tage gratis testen →</a>`;
     const link=promo.querySelector("a");
     if(link) link.addEventListener("click",()=>{
+      recordBusinessCtaClick("result");
       try{if(window.umami)window.umami.track("Business nach Übergabe geklickt");}catch(e){}
     });
     return promo;
@@ -227,23 +245,22 @@
   function createBusinessEntry(){
     const entry=document.createElement("aside");
     entry.className="uc-business-entry no-print";
-    entry.style.columnGap="20px";
     entry.innerHTML=`
       <div class="uc-business-entry-copy">
-        <span class="uc-business-entry-badge">BUSINESS · 14 TAGE GRATIS</span>
-        <strong>Machst du Wohnungsübergaben regelmäßig?</strong>
-        <p><b style="display:block;color:#111;margin-bottom:2px">Dann sparst du dir bei jeder weiteren Übergabe doppelte Arbeit.</b>Wohnungen und Objekte einmal anlegen, Übergaben dauerhaft speichern, später wieder öffnen und gemeinsam im Team verwalten.</p>
-        <div class="uc-business-entry-compare">
-          <div><b>KOSTENLOS</b><span>Für eine einzelne Wohnungsübergabe.</span></div>
-          <div><b>BUSINESS</b><span>Speichern · Historie · Objektverwaltung · Team.</span></div>
+        <span class="uc-business-entry-badge">ÜbergabeCheck Business</span>
+        <strong>Wohnungsübergaben professionell verwalten.</strong>
+        <p>Objekte und Wohnungen zentral anlegen, Übergaben und Rücknahmen dauerhaft speichern, Mängel dokumentieren und gemeinsam im Team arbeiten.</p>
+        <div class="uc-business-entry-meta">
+          <div><b>29,99 €</b><span>pro Monat</span></div>
+          <div><b>14 Tage</b><span>kostenlos testen</span></div>
+          <div><b>Bis zu 10</b><span>Mitarbeiter inklusive</span></div>
         </div>
-        <span class="uc-business-entry-trial">✓ 14 Tage kostenlos · keine automatische Verlängerung</span>
+        <span class="uc-business-entry-note">Keine automatische Verlängerung · Preis unabhängig von der Anzahl der Übergaben</span>
       </div>
-      <a href="/business/">14 Tage gratis →</a>`;
-    const heading=entry.querySelector("strong");
-    if(heading) heading.style.maxWidth="none";
+      <a href="/business/">Business ansehen →</a>`;
     const link=entry.querySelector("a");
     if(link) link.addEventListener("click",()=>{
+      recordBusinessCtaClick("landing");
       try{if(window.umami)window.umami.track("Business Startseite geklickt");}catch(e){}
     });
     return entry;
