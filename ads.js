@@ -422,10 +422,6 @@
         landingBusinessButton.dataset.businessTracked="1";
       }
 
-      if(landingChoice&&!document.querySelector(".uc-business-entry")){
-        landingChoice.insertAdjacentElement("afterend",createBusinessEntry());
-      }
-
       const features=document.querySelector(".landing-features");
       if(features&&!document.querySelector('[data-partner="check24"][data-partner-position="landing"]')){
         features.insertAdjacentElement("afterend",createCheck24Promo("landing"));
