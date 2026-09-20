@@ -131,29 +131,25 @@
   .landing h1{font-size:58px;line-height:1.03;letter-spacing:-2.5px;margin:0 0 18px;font-weight:850}
   .landing h1 em{font-style:normal;color:#6b6d72}
   .landing-lead{max-width:690px;margin:0 auto;color:#666;font-size:17px;line-height:1.65}
-  .landing-audience{margin:30px auto 0;max-width:690px}
-  .landing-audience h2{font-size:22px;line-height:1.2;margin:0 0 7px;letter-spacing:-.45px}
-  .landing-audience p{margin:0;color:#70727a;font-size:14px;line-height:1.55}
-  .landing-choice{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;justify-content:center;margin-top:18px;text-align:left}
-  .landing-choice-card{min-height:230px;padding:24px;border-radius:20px;text-align:left;display:flex;flex-direction:column;text-decoration:none;cursor:pointer;transition:transform .15s ease,box-shadow .15s ease,border-color .15s ease}
-  .choice-top{display:flex;align-items:flex-start;gap:13px;margin-bottom:18px}
-  .choice-icon{width:38px;height:38px;border-radius:12px;display:flex;align-items:center;justify-content:center;flex:0 0 38px;font-size:18px;font-weight:900}
-  .choice-copy small{display:block;margin:1px 0 5px;font-size:11px;font-weight:900;letter-spacing:.07em;text-transform:uppercase}
-  .choice-copy strong{display:block;font-size:19px;line-height:1.25;letter-spacing:-.25px}
-  .choice-description{font-size:13px;line-height:1.55;margin-bottom:15px}
-  .choice-list{display:grid;gap:8px;margin:0 0 20px;padding:0;list-style:none}
-  .choice-list li{font-size:12.5px;line-height:1.4}
-  .choice-list li::before{content:"✓";font-weight:950;margin-right:8px}
-  .choice-cta{margin-top:auto;display:inline-flex;align-items:center;font-size:13px;font-weight:900}
-  .landing-button{margin:0;background:#fff;color:#222;border:1px solid #d9dade;box-shadow:0 5px 16px rgba(0,0,0,.055);font:inherit}
-  .landing-button .choice-icon{background:#f1f2f4;color:#111}
-  .landing-button .choice-copy small,.landing-button .choice-description,.landing-button .choice-list{color:#6f7278}
-  .landing-button:hover{transform:translateY(-2px);border-color:#bfc1c7;box-shadow:0 10px 24px rgba(0,0,0,.09)}
-  .landing-business-button{background:#111;color:#fff;border:1px solid #111;box-shadow:0 8px 22px rgba(0,0,0,.14)}
-  .landing-business-button .choice-icon{background:#ffd84d;color:#111}
-  .landing-business-button .choice-copy small{color:#9ee3ad}.landing-business-button .choice-description,.landing-business-button .choice-list{color:#d4d4d7}
-  .landing-business-button .choice-list li::before{color:#ffd84d}
-  .landing-business-button:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.19)}
+  .landing-audience{margin:30px auto 0;max-width:720px}
+  .landing-audience h2{font-size:21px;line-height:1.25;margin:0 0 6px;letter-spacing:-.35px}
+  .landing-audience p{margin:0;color:#777;font-size:13.5px;line-height:1.55}
+  .landing-choice{max-width:760px;margin:18px auto 0;background:#fff;border:1px solid #e0e1e4;border-radius:20px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.055);text-align:left}
+  .landing-choice-card{width:100%;min-height:116px;padding:20px 22px;display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:16px;align-items:center;text-align:left;text-decoration:none;cursor:pointer;transition:background .15s ease;border:0;border-radius:0}
+  .landing-choice-card+.landing-choice-card{border-top:1px solid #ececef}
+  .choice-icon{width:42px;height:42px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;background:#f0f1f3;color:#111}
+  .choice-copy small{display:block;margin:0 0 5px;font-size:10.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#74777d}
+  .choice-copy strong{display:block;font-size:17px;line-height:1.25;letter-spacing:-.2px;color:#17181b;margin-bottom:4px}
+  .choice-copy span{display:block;font-size:12.5px;line-height:1.5;color:#74777d}
+  .choice-cta{display:inline-flex;align-items:center;justify-content:center;min-height:40px;padding:10px 14px;border-radius:11px;font-size:12.5px;font-weight:900;white-space:nowrap}
+  .landing-button{margin:0;background:#fff;color:#222;font:inherit}
+  .landing-button:hover{background:#fafafa}
+  .landing-button .choice-cta{background:#111;color:#fff}
+  .landing-business-button{background:#fbfbfc;color:#222}
+  .landing-business-button:hover{background:#f6f7f8}
+  .landing-business-button .choice-icon{background:#edf7ef;color:#17783a}
+  .landing-business-button .choice-copy small{color:#278548}
+  .landing-business-button .choice-cta{background:#fff;color:#222;border:1px solid #d8d9dd}
   .landing-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:52px;text-align:left}
   .landing-features>div{background:#fff;border:1px solid #e2e3e6;border-radius:18px;padding:20px}
   .feature-icon{font-size:23px;margin-bottom:12px}
@@ -166,10 +162,11 @@
     .landing h1{font-size:40px;letter-spacing:-1.7px}
     .landing-lead{font-size:15px}
     .landing-audience{margin-top:24px}
-    .landing-audience h2{font-size:20px}
-    .landing-choice{grid-template-columns:1fr}
-    .landing-choice-card{min-height:0;padding:20px}
-    .choice-top{margin-bottom:14px}
+    .landing-audience h2{font-size:19px}
+    .landing-choice{margin-top:15px}
+    .landing-choice-card{min-height:0;padding:18px;grid-template-columns:40px 1fr;gap:13px}
+    .choice-icon{width:38px;height:38px}
+    .choice-cta{grid-column:1/-1;width:100%;margin-top:2px}
     .landing-features{grid-template-columns:1fr;margin-top:38px}
   }
   .sig-wrap{margin-top:12px}
@@ -211,7 +208,7 @@
 </style>
 <link rel="stylesheet" href="ads.css?v=14">
 <script defer src="https://cloud.umami.is/script.js" data-website-id="a4c18987-08e8-480c-a3e7-a19b50232683" data-domains="smettmann.github.io"></script>
-<script defer src="ads.js?v=15"></script>
+<script defer src="ads.js?v=16"></script>
 </head>
 <body>
 <div class="app">
@@ -228,41 +225,27 @@
       <h1>Deine Wohnungsübergabe.<br><em>Einfach dokumentiert.</em></h1>
       <p class="landing-lead">Räume, Mängel, Fotos, Zählerstände und Schlüssel – Schritt für Schritt festhalten und am Ende ein übersichtliches Übergabeprotokoll erstellen.</p>
       <div class="landing-audience">
-        <h2>Was möchtest du machen?</h2>
-        <p>Wähle einfach nach deinem Einsatz: eine einzelne Wohnungsübergabe dokumentieren oder mehrere Wohnungen und Vorgänge dauerhaft verwalten.</p>
+        <h2>Wie möchtest du ÜbergabeCheck nutzen?</h2>
+        <p>Einmal eine Wohnung sauber dokumentieren oder Übergaben dauerhaft im Unternehmen verwalten.</p>
       </div>
       <div class="landing-choice">
         <button class="landing-choice-card landing-button" onclick="startApp()">
-          <div class="choice-top">
-            <div class="choice-icon">1×</div>
-            <div class="choice-copy">
-              <small>Für Mieter &amp; Vermieter</small>
-              <strong>Ich möchte eine einzelne Übergabe erstellen</strong>
-            </div>
+          <div class="choice-icon">✓</div>
+          <div class="choice-copy">
+            <small>Einzelne Übergabe</small>
+            <strong>Wohnung übergeben oder zurücknehmen</strong>
+            <span>Für Mieter und private Vermieter. Direkt starten, Zustand dokumentieren und am Ende ein Übergabeprotokoll erstellen.</span>
           </div>
-          <div class="choice-description">Ideal, wenn du jetzt eine Wohnung übergibst oder zurücknimmst und dafür ein sauberes Protokoll brauchst.</div>
-          <ul class="choice-list">
-            <li>direkt im Browser starten</li>
-            <li>Räume, Mängel, Fotos &amp; Zählerstände erfassen</li>
-            <li>Übergabeprotokoll am Ende erstellen</li>
-          </ul>
-          <span class="choice-cta">Kostenlose Übergabe starten →</span>
+          <span class="choice-cta">Kostenlos starten →</span>
         </button>
         <a class="landing-choice-card landing-business-button" href="/business/">
-          <div class="choice-top">
-            <div class="choice-icon">∞</div>
-            <div class="choice-copy">
-              <small>Für Verwaltungen &amp; Unternehmen</small>
-              <strong>Ich verwalte Wohnungen regelmäßig</strong>
-            </div>
+          <div class="choice-icon">▦</div>
+          <div class="choice-copy">
+            <small>Regelmäßige Verwaltung</small>
+            <strong>Mehrere Wohnungen und Übergaben verwalten</strong>
+            <span>Für Hausverwaltungen, Vermieter und Teams. Objekte anlegen, Vorgänge speichern und später wieder aufrufen.</span>
           </div>
-          <div class="choice-description">Für Hausverwaltungen, Vermieter und Teams, die viele Übergaben und Rücknahmen dauerhaft organisieren.</div>
-          <ul class="choice-list">
-            <li>Objekte &amp; Wohnungen zentral verwalten</li>
-            <li>Übergaben und Rücknahmen dauerhaft speichern</li>
-            <li>für Teams und wiederkehrende Vorgänge</li>
-          </ul>
-          <span class="choice-cta">ÜbergabeCheck Business ansehen →</span>
+          <span class="choice-cta">Business ansehen →</span>
         </a>
       </div>
       <div class="landing-features">
